@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GOTTH for people in a rush</title>
+        <!-- Tailwind CSS (replace the link below with your preferred method of including Tailwind) -->
+        <script src="tailwindminified.js"></script>
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Header / Navigation -->
+        <header class="bg-gray-800">
+            <nav
+                class="container mx-auto px-4 py-4 flex justify-between items-center"
+            >
+                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="hover:text-teal-400">Home</a></li>
+                    <li>
+                        <a href="#" class="hover:text-teal-400">Tutorials</a>
+                    </li>
+                    <li><a href="#" class="hover:text-teal-400">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Section -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Intro Section: Image + Blurb -->
+            <div
+                class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8 mb-8"
+            >
+                <!-- Image -->
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <!-- Replace src with your actual image URL -->
+                    <img
+                        class="rounded shadow"
+                        src="gopherart.png"
+                        alt="GOTTH stack illustration"
+                    />
+                </div>
+                <!-- Blurb -->
+                <div class="w-full md:w-1/2 text-left">
+                    <h2 class="text-2xl font-semibold mb-2">
+                        What is the GOTTH stack?
+                    </h2>
+                    <p class="leading-relaxed">
+                        The GOTTH stack combines Go, Tailwind CSS, Go templates,
+                        and HTMX to create fast, efficient web applications. You
+                        can quickly prototype and build responsive UIs, harness
+                        the power of Go’s lightning-fast performance, and
+                        leverage minimal JavaScript for dynamic page
+                        interactions. Simplify your workflow with streamlined
+                        tooling and a modern development approach.
+                    </p>
+                </div>
+            </div>
+
+
+               <div id="bottom-section">
+                 <!-- Vertical Section: "Why GOTTH" and "Go section" -->
+                 <div class="space-y-6 m-8 text-center">
+                   <div>
+                     <h3 class="text-xl font-semibold mb-1">Want to learn more?</h3>
+                     <p class="motion-reduce:animate-bounce">Check out our <a href="/whygotth" class="underline text-teal-300 hover:text-teal-400">Why GOTTH</a> section.</p>
+                   </div>
+
+                   <div>
+                     <h3 class="text-xl font-semibold mb-1">Ready to get started?</h3>
+                     <p>Jump to our <a href="#" class="underline text-teal-300 hover:text-teal-400">Go section</a>.</p>
+                   </div>
+
+                   <p class="mt-4">
+                     Otherwise, use the
+                     <a href="#" class="underline text-teal-300 hover:text-teal-400">tutorials link</a>
+                     to select your tutorial!
+                   </p>
+                 </div>
+
+                 <!-- Footer -->
+                 <footer class="text-center py-4 border-t border-teal-700">
+                   <p>Designed by <span class="font-semibold">Nicholas Dewberry</span></p>
+                   <p class="text-sm">&copy; 2025 All rights reserved.</p>
+                 </footer>
+               </div>
+             </main>
+
+
+        </main>
+    </body>
+</html>

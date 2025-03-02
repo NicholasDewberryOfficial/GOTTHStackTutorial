@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Beginner - Working with Templating</title>
+
+        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
+        <script src="tailwindminified.js"></script>
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Header (same as on other pages) -->
+        <header class="bg-gray-800">
+            <nav
+                class="container mx-auto px-4 py-4 flex justify-between items-center"
+            >
+                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
+                <ul class="flex space-x-4">
+                    <li>
+                        <a
+                            href="index.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="tutorials.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Tutorials
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-8">
+            <section class="max-w-3xl mx-auto text-justify">
+                <h2 class="text-3xl font-semibold mb-4">
+                    Beginner: Working with Templating
+                </h2>
+
+                <p class="mb-4 leading-relaxed">
+                    Alright, so now you've got a web server and a way to write
+                    to the browser. Now, it's time to start sending over some
+                    .html. <br /><br />
+
+                    In this tutorial, we’ll explore different ways to use Go’s
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >html/template</code
+                    >
+                    package alongside
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >net/http</code
+                    >
+                    to serve dynamic HTML pages. Templating allows you to
+                    separate your Go code from your front-end structure, making
+                    your application easier to maintain and extend.
+                </p>
+
+                <!-- Example 1: Single Template -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    1. Serving a Single Template
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    The simplest scenario is serving a single HTML file as a
+                    template. Suppose you have an <code>index.html</code> in
+                    your project’s root or a <code>templates</code> directory:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// single_template.go</span>
+package main
+
+import (
+    <span class="text-blue-200">"log"</span>
+    <span class="text-blue-200">"net/http"</span>
+    <span class="text-blue-200">"html/template"</span>
+)
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        tmpl, err := template.ParseFiles("index.html") //Note how we're using the walrus operator to get the value to the parsed template, but also the error.
+        if err != nil {
+            log.Fatal(err)
+        }
+        tmpl.Execute(w, nil)
+    })
+
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    Whenever a user visits
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >http://localhost:8080</code
+                    >, the code above parses <code>index.html</code> and writes
+                    it to the response. You can pass data by replacing
+                    <code>nil</code> with a struct or map.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    Here’s a very basic <code>index.html</code> that you might
+                    serve:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">&lt;!-- index.html --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Single Template Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="margin: 0; padding: 2rem; font-family: sans-serif;"&gt;
+    &lt;h1&gt;Hello from a single template!&lt;/h1&gt;
+    &lt;p&gt;This is a simple static HTML page.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+                <!-- Example 2: Multiple Templates with ParseFiles -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    2. Multiple Templates with <code>ParseFiles</code>
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    If you have multiple templates (e.g.,
+                    <code>home.html</code> and <code>about.html</code>), you can
+                    parse them together, then choose which to execute based on
+                    the route or content you’re serving:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// multiple_templates.go</span>
+package main
+
+import (
+    "log"
+    "net/http"
+    "html/template"
+)
+
+var tmpl *template.Template
+
+func init() {
+    var err error
+    tmpl, err = template.ParseFiles("home.html", "about.html")
+    if err != nil {
+        log.Fatal(err)
+    }
+}
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+    tmpl.ExecuteTemplate(w, "home.html", nil)
+}
+
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+    tmpl.ExecuteTemplate(w, "about.html", nil)
+}
+
+func main() {
+    http.HandleFunc("/", homeHandler)
+    http.HandleFunc("/about", aboutHandler)
+
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+
+                <p class="mb-4 leading-relaxed">
+                    Below are minimal examples of <code>home.html</code> and
+                    <code>about.html</code> to demonstrate how you might
+                    structure them. Notice how each file includes an
+                    <code>&lt;title&gt;</code> or <code>&lt;h1&gt;</code> that
+                    differs:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">&lt;!-- home.html --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Home Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to the Home Page!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">&lt;!-- about.html --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;About Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Learn more about us here.&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+                <!-- Example 3: ParseGlob for an entire folder -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    3. Using <code>ParseGlob</code> for an Entire Folder
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    If you keep many templates in a dedicated directory,
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >ParseGlob</code
+                    >
+                    can load them all in one go. For example:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// parse_glob.go</span>
+package main
+
+import (
+    "log"
+    "net/http"
+    "html/template"
+)
+
+var tmpl *template.Template
+
+func init() {
+    var err error
+    tmpl, err = template.ParseGlob("templates/*.html")
+    if err != nil {
+        log.Fatal(err)
+    }
+}
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        tmpl.ExecuteTemplate(w, "home.html", nil)
+    })
+
+    http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
+        tmpl.ExecuteTemplate(w, "about.html", nil)
+    })
+
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    You might place <code>home.html</code> and
+                    <code>about.html</code> inside a
+                    <code>templates/</code> folder. The code above will parse
+                    everything with a <code>.html</code> extension in that
+                    folder.
+                </p>
+
+                <!-- Example 4: Passing Data to Templates -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    4. Passing Data to Templates
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    Templates really shine when you need to inject dynamic data
+                    from Go. For instance, you can define a struct and pass it
+                    to your template:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// data.go</span>
+package main
+
+import (
+    "log"
+    "net/http"
+    "html/template"
+)
+
+type PageData struct {
+    Title   string
+    Message string
+}
+
+var tmpl *template.Template
+
+func init() {
+    var err error
+    tmpl, err = template.ParseFiles("home.html")
+    if err != nil {
+        log.Fatal(err)
+    }
+}
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+    data := PageData{
+        Title:   "Hello from Go Templates!",
+        Message: "This is a dynamic message passed from the server.",
+    }
+    tmpl.Execute(w, data)
+}
+
+func main() {
+    http.HandleFunc("/", homeHandler)
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    In <code>home.html</code>, you can reference
+                    <code>{{.Title}}</code> and <code>{{.Message}}</code> for
+                    dynamic content:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">&lt;!-- home.html --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;{{.Title}}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;{{.Title}}&lt;/h1&gt;
+    &lt;p&gt;{{.Message}}&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    This approach allows your Go code to supply variables,
+                    slices, maps, or entire structs, and have them rendered
+                    neatly in your HTML files.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    <button
+                        class="bg-stone-700 text-teal-300 px-3 py-2 rounded transition-colors hover:bg-stone-600"
+                    >
+                        Next stop: Using Tailwind + Templates
+                    </button>
+                </p>
+            </section>
+        </main>
+
+        <!-- Footer (same as on other pages) -->
+        <footer class="bg-gray-800 text-center py-4">
+            <p>
+                Designed by
+                <span class="font-semibold">Nicholas Dewberry</span>
+            </p>
+            <p class="text-sm">&copy; 2025 All rights reserved.</p>
+        </footer>
+    </body>
+</html>

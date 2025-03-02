@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Beginner - Starting a Go server</title>
+
+        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
+        <script src="tailwindminified.js"></script>
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Header (same as on other pages) -->
+        <header class="bg-gray-800">
+            <nav
+                class="container mx-auto px-4 py-4 flex justify-between items-center"
+            >
+                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
+                <ul class="flex space-x-4">
+                    <li>
+                        <a
+                            href="index.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="tutorials.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Tutorials
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-8">
+            <section class="max-w-3xl mx-auto text-justify">
+                <h2 class="text-3xl font-semibold mb-4">
+                    Beginner: Starting a Go server
+                </h2>
+
+                <p class="mb-4 leading-relaxed">
+                    In this tutorial, we’ll walk through multiple ways to create
+                    and run a basic Go web server using the
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >net/http</code
+                    >
+                    package. These approaches will form the foundation for
+                    serving HTML templates, APIs, and eventually integrating
+                    with Tailwind CSS and htmx in the GOTTH stack.
+                </p>
+
+                <!-- Example 1: Minimal server -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    1. Minimal Server
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    Here’s the simplest way to serve a single “Hello, world!”
+                    response on port 8080:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// minimal.go</span>
+package main
+
+import (
+    "fmt"
+    <span class="text-blue-200">"net/http"</span>
+)
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintln(w, "Hello, world!")
+    })
+
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    Simply run
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >go run minimal.go</code
+                    >, then navigate to
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >http://localhost:8080</code
+                    >.
+                </p>
+
+                <!-- Example 2: Named handler function -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    2. Using a Named Handler Function
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    If you’d like more clarity, you can define a separate
+                    function for handling requests and attach that to a route:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// namedhandler.go</span>
+package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "Hello from a named handler!")
+}
+
+func main() {
+    http.HandleFunc("/", helloHandler)
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    This approach is more flexible since you can define multiple
+                    handler functions for different endpoints or for more
+                    sophisticated request handling.
+                </p>
+
+                <!-- Example 3: Custom routes and default mux -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    3. Multiple Routes with the Default Mux
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    Go’s default multiplexer (often just called the “default
+                    mux”) can handle multiple routes by calling
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >http.HandleFunc</code
+                    >
+                    more than once:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// multipleroutes.go</span>
+package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "Welcome to the Home Page!")
+}
+
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "Learn about us here.")
+}
+
+func main() {
+    http.HandleFunc("/", homeHandler)
+    http.HandleFunc("/about", aboutHandler)
+
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    Now you can visit
+                    <code class="bg-stone-700 px-1 py-0.5 rounded">
+                        http://localhost:8080/
+                    </code>
+                    and
+                    <code class="bg-stone-700 px-1 py-0.5 rounded">
+                        http://localhost:8080/about
+                    </code>
+                    to see different responses.
+                </p>
+
+                <!-- Example 4: Using a Custom Mux -->
+                <h3 class="text-2xl font-semibold mb-2 mt-8">
+                    4. Using a Custom Mux
+                </h3>
+                <p class="mb-4 leading-relaxed">
+                    If you prefer not to rely on Go’s default mux, you can
+                    create your own using
+                    <code class="bg-stone-700 px-1 py-0.5 rounded"
+                        >http.NewServeMux</code
+                    >. This is helpful for organizing routes in larger
+                    applications:
+                </p>
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// custommux.go</span>
+package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    mux := http.NewServeMux()
+
+    mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintln(w, "This is the root path, served by a custom mux.")
+    })
+
+    mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintln(w, "Hello from a custom mux route!")
+    })
+
+    http.ListenAndServe(":8080", mux)
+}
+</pre>
+                <p class="mb-4 leading-relaxed">
+                    Either approach (default mux vs. custom mux) works fine.
+                    It’s largely a matter of personal preference or project
+                    organization.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    <button
+                        class="bg-stone-700 text-teal-300 px-3 py-2 rounded transition-colors hover:bg-stone-600"
+                    >
+                        Next stop: Using Templates to serve pages
+                    </button>
+                </p>
+            </section>
+        </main>
+
+        <!-- Footer (same as on other pages) -->
+        <footer class="bg-gray-800 text-center py-4">
+            <p>
+                Designed by
+                <span class="font-semibold">Nicholas Dewberry</span>
+            </p>
+            <p class="text-sm">&copy; 2025 All rights reserved.</p>
+        </footer>
+    </body>
+</html>

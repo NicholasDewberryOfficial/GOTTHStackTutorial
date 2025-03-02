@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Intro to net/http</title>
+
+        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
+        <script src="tailwindminified.js"></script>
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Header (same as on other pages) -->
+        <header class="bg-gray-800">
+            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
+                <ul class="flex space-x-4">
+                    <li>
+                        <a
+                            href="index.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="tutorials.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Tutorials
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content: Novice Intro to net/http -->
+        <main class="container mx-auto px-4 py-8">
+            <section class="max-w-3xl mx-auto text-justify">
+                <h2 class="text-3xl font-semibold mb-4">A Short Introduction to net/http</h2>
+
+                <p class="mb-4 leading-relaxed">
+                    The <code class="bg-stone-700 px-1 py-0.5 rounded">net/http</code> package is part of
+                    Go’s standard library and provides everything you need to build HTTP servers (and
+                    make HTTP requests) with minimal setup. It’s widely used for web development, REST APIs,
+                    and other network-related applications.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    With <code class="bg-stone-700 px-1 py-0.5 rounded">net/http</code>, you can easily spin up
+                    a basic server in just a few lines of Go. For example:
+                </p>
+
+                <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
+<span class="text-gray-300">// Simple net/http server example</span>
+package main
+
+import (
+    "fmt"
+    <span class="text-blue-200">"net/http"</span>
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "Hello, Go web!")
+}
+
+func main() {
+    http.HandleFunc("/", handler)
+    http.ListenAndServe(":8080", nil)
+}
+</pre>
+
+                <p class="mb-4 leading-relaxed">
+                    When you run this code, your Go program starts listening on port 8080, and any
+                    GET request to <code class="bg-stone-700 px-1 py-0.5 rounded">http://localhost:8080/</code>
+                    will return “Hello, Go web!”.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    If you want to run a web server in Go, there are a wide variety of frameworks. Most of them still have their place and purpose - however for most use cases net/http offers the best development experience. If you're a new web developer, stick to net/http, but if you're more familiar with Chi/Fiber, you can easily transfer your skillset for this tutorial.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    Below are a few resources to help you dive deeper:
+                    <br><br>
+                    <ul class="text-blue-100 gap-4">
+                        <li>
+                            <a
+                                class="text-blue-300"
+                                href="https://pkg.go.dev/net/http"
+                            >
+                                Official net/http Documentation
+                            </a>
+                            – The authoritative reference on all the available functions, types, and best practices.
+                        </li>
+                        <br><br>
+                        <li>
+                            <a
+                                class="text-blue-300"
+                                href="https://gobyexample.com/http-servers"
+                            >
+                                Go by Example: HTTP Servers
+                            </a>
+                            – Two simple, clear examples that highlight how we make servers.
+                        </li>
+                        <br><br>
+                        <li>
+                            <a class="text-blue-300"
+                                href="https://reintech.io/blog/deep-dive-into-net-http-package">
+                            A good blog post about working with net/http with a LOT of code examples.
+                            </a>
+                        </li>
+                    </ul>
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    <button
+                        class="bg-stone-700 text-teal-300 px-3 py-2 rounded transition-colors hover:bg-stone-600"
+                    >
+                        Next stop: Intro to html/template
+                    </button>
+                </p>
+            </section>
+        </main>
+
+        <!-- Footer (same as on other pages) -->
+        <footer class="bg-gray-800 text-center py-4">
+            <p>
+                Designed by
+                <span class="font-semibold">Nicholas Dewberry</span>
+            </p>
+            <p class="text-sm">&copy; 2025 All rights reserved.</p>
+        </footer>
+    </body>
+</html>

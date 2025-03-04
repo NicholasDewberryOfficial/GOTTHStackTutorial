@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Intro to Tailwind</title>
+
+        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
+        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Header (same as on other pages) -->
+        <header class="bg-gray-800">
+            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
+                <ul class="flex space-x-4">
+                    <li>
+                        <a
+                            href="/"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="/tutorials"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Tutorials
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content: Intro to Tailwind -->
+        <main class="container mx-auto px-4 py-8">
+            <section class="max-w-3xl mx-auto text-justify">
+                <h2 class="text-3xl font-semibold mb-4">A Short Introduction to Tailwind CSS</h2>
+
+                <p class="mb-4 leading-relaxed">
+                    Tailwind CSS is a utility-first CSS framework that gives you low-level, composable classes
+                    to design your UI without having to write custom CSS. Rather than providing pre-designed
+                    components, Tailwind’s approach focuses on flexibility and speed, letting you rapidly
+                    prototype any layout or design.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    By default, Tailwind includes a wide range of utility classes for things like padding,
+                    margin, color, and typography. This approach keeps your styles consistent and predictable,
+                    plus you can still customize or extend Tailwind to match your exact needs.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    Working in the GOTTH stack, Tailwind CSS allows you to style your Go templates and htmx
+                    snippets without cluttering your project with large CSS files or complicated builds.
+                    If you understand basic HTML and CSS concepts, adding Tailwind is as easy as including
+                    a script or stylesheet and then applying the appropriate utility classes.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    If you’re new to Tailwind, the following resources might help:
+                    <br><br>
+                    <ul class="text-blue-100 gap-4">
+                        <li>
+                            <a
+                                class="text-blue-300"
+                                href="https://tailwindcss.com/docs"
+                            >
+                                Official Tailwind Documentation
+                            </a>
+                            – The best place to start, with a complete reference of classes, configuration,
+                            and examples.
+                        </li>
+                        <br><br>
+                        <li>
+                            <a
+                                class="text-blue-300"
+                                href="https://play.tailwindcss.com/"
+                            >
+                                Tailwind Play
+                            </a>
+                            – An online sandbox where you can experiment with Tailwind classes and see
+                            real-time results without installing anything locally.
+                        </li>
+                        <br><br>
+                        <li>
+                            <a
+                                class="text-blue-300"
+                                href="https://nerdcave.com/tailwind-cheat-sheet"
+                            >
+                                Tailwind Cheat Sheet
+                            </a>
+                            – A handy reference for quickly looking up utility class names and syntax.
+                        </li>
+                    </ul>
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    <button
+                        class="bg-stone-700 text-teal-300 px-3 py-2 rounded transition-colors hover:bg-stone-600"
+                    >
+                        Next stop: Integrating the GOTTH stack together
+                    </button>
+                </p>
+            </section>
+        </main>
+
+        <!-- Footer (same as on other pages) -->
+        <footer class="bg-gray-800 text-center py-4">
+            <p>
+                Designed by
+                <span class="font-semibold">Nicholas Dewberry</span>
+            </p>
+            <p class="text-sm">&copy; 2025 All rights reserved.</p>
+        </footer>
+    </body>
+</html>

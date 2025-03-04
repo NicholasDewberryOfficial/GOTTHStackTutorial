@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Intro to HTML/CSS</title>
+
+        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
+        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Header (same as on other pages) -->
+        <header class="bg-gray-800">
+            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
+                <ul class="flex space-x-4">
+                    <li>
+                        <a
+                            href="index.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="tutorials.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Tutorials
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content: Novice Intro to HTML/CSS -->
+        <main class="container mx-auto px-4 py-8">
+            <section class="max-w-3xl mx-auto text-justify">
+                <h2 class="text-3xl font-semibold mb-4">A Short Introduction to HTML/CSS</h2>
+
+                <p class="mb-4 leading-relaxed">
+                    HTML (HyperText Markup Language) and CSS (Cascading Style Sheets) are the foundational
+                    languages of the web. HTML defines the structure and content of a page (think of it as
+                    the “skeleton” of your website), while CSS is used to control the layout, colors, and
+                    overall visual presentation (the “skin and clothes” of your skeleton).
+                </p>
+
+                <p class="mb-4 leading-relaxed"> To give another crappy example, HTML is what you read, and CSS makes it look good.  </p>
+
+                <p class="mb-4 leading-relaxed"> AI is ABSURDLY good at working with HTML/CSS. I'm guessing that since everything is relatively static and because there's a ton of training data, AI can very quickly spin up boilerplate for you to fill in. Still - there's no excuse for not knowing your basics.</p>
+
+                <p class="mb-4 leading-relaxed">
+                    Below are a few recommended resources to quickly get you up to speed. Pick whichever
+                    feels most comfortable (or combine them!), and in no time you’ll be styling pages
+                    like a pro.
+                    <br><br>
+                    <ul class="text-blue-100 gap-4">
+                        <li>
+                            <a class="text-blue-300" href="https://developer.mozilla.org/docs/Learn/Getting_started_with_the_web/HTML_basics">
+                                MDN’s HTML basics
+                            </a>
+                            – Highly reputable and beginner-friendly, giving you a clear overview of how to structure your pages properly.
+                        </li>
+                        <br><br>
+                        <li>
+                            <a class="text-blue-300" href="https://www.w3schools.com/html/">
+                                W3Schools HTML and CSS Tutorials
+                            </a>
+                            – Quick, concise, and easy to follow, plus they include lots of interactive examples you can tweak.
+                        </li>
+                        <br><br>
+                        <li>
+                            <a class="text-blue-300" href="https://css-tricks.com/guides/">
+                                CSS-Tricks Guides
+                            </a>
+                            – Slightly more advanced, but loaded with practical techniques. “Shots fired! Shots fired!” if you’d prefer simpler resources, but this is gold once you grasp the basics.
+                        </li>
+                        <br><br>
+                        <li>
+                            <a class="text-blue-300" href="https://www.freecodecamp.org/learn/responsive-web-design/">
+                                freeCodeCamp: Responsive Web Design
+                            </a>
+                            – A free, structured course that walks you through building projects from scratch, with tests along the way.
+                        </li>
+                    </ul>
+                    <br>
+                    Once you’re comfortable creating simple pages and applying basic styling, you’ll have
+                    a solid foundation to build your GOTTH stack projects.
+                </p>
+
+                <p class="mb-4 leading-relaxed">
+                    <button class="bg-stone-700 text-teal-300 px-3 py-2 rounded transition-colors hover:bg-stone-600">
+                        Next stop: Intro to htmx
+                    </button>
+                </p>
+
+            </section>
+        </main>
+
+        <!-- Footer (same as on other pages) -->
+        <footer class="bg-gray-800 text-center py-4">
+            <p>
+                Designed by
+                <span class="font-semibold">Nicholas Dewberry</span>
+            </p>
+            <p class="text-sm">&copy; 2025 All rights reserved.</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+{{define "genericheader"}}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOTTH for people in a rush</title>
+    <!-- Tailwind CSS (replace the link below with your preferred method of including Tailwind) -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+
+<header class="bg-gray-800">
+    <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold">
+            GOTTH for people in a rush (under construction Mar 4)
+        </h1>
+        <ul class="flex space-x-4">
+            <li><a href="/" class="hover:text-teal-400">Home</a></li>
+            <li>
+                <a href="/tutorials" class="hover:text-teal-400">Tutorials</a>
+            </li>
+            <li><a href="/about" class="hover:text-teal-400">About</a></li>
+        </ul>
+    </nav>
+</header>
+
+{{end}}

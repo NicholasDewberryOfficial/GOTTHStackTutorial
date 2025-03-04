@@ -1,50 +1,7 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Tutorials</title>
-
-        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
-        <script src="tailwindminified.js"></script>
-    </head>
+    {{ template "genericheader" . }}
     <body class="bg-gray-900 text-teal-100 font-sans">
-        <!-- Header -->
-        <header class="bg-gray-800">
-            <nav
-                class="container mx-auto px-4 py-4 flex justify-between items-center"
-            >
-                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
-                <ul class="flex space-x-4">
-                    <!-- Updated links with text-teal-100 and bg-blue-900 -->
-                    <li>
-                        <a
-                            href="index.html"
-                            class="inline-block px-3 py-1 rounded bg-blue-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="inline-block px-3 py-1 rounded bg-blue-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Tutorials
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="inline-block px-3 py-1 rounded bg-blue-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            About
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-
         <!-- Main content -->
         <main class="container mx-auto px-4 py-8">
             <!-- Novice Section -->
@@ -54,37 +11,37 @@
                 </h2>
                 <div class="space-y-2">
                     <a
-                        href="#"
+                        href="/0/0"
                         class="block bg-blue-900 text-teal-100 hover:bg-teal-700 px-3 py-2 rounded transition-colors"
                     >
                         Intro to Go
                     </a>
                     <a
-                        href="#"
+                        href="/0/1"
                         class="block bg-blue-900 text-teal-100 hover:bg-teal-700 px-3 py-2 rounded transition-colors"
                     >
                         Intro to html/css
                     </a>
                     <a
-                        href="#"
+                        href="/0/2"
                         class="block bg-blue-900 text-teal-100 hover:bg-teal-700 px-3 py-2 rounded transition-colors"
                     >
                         Intro to htmx
                     </a>
                     <a
-                        href="#"
+                        href="/0/3"
                         class="block bg-blue-900 text-teal-100 hover:bg-teal-700 px-3 py-2 rounded transition-colors"
                     >
                         Intro to net/http
                     </a>
                     <a
-                        href="#"
+                        href="/0/4"
                         class="block bg-blue-900 text-teal-100 hover:bg-teal-700 px-3 py-2 rounded transition-colors"
                     >
                         Intro to html/template
                     </a>
                     <a
-                        href="#"
+                        href="/0/5"
                         class="block bg-blue-900 text-teal-100 hover:bg-teal-700 px-3 py-2 rounded transition-colors"
                     >
                         Intro to tailwind
@@ -187,13 +144,6 @@
             </section>
         </main>
 
-        <!-- Footer (same as the other pages) -->
-        <footer class="bg-gray-800 text-center py-4">
-            <p>
-                Designed by
-                <span class="font-semibold">Nicholas Dewberry</span>
-            </p>
-            <p class="text-sm">&copy; 2025 All rights reserved.</p>
-        </footer>
+        {{ template "genericfooter" . }}
     </body>
 </html>

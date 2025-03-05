@@ -1,3 +1,3 @@
-module start/v2
+module main
 
 go 1.23.5

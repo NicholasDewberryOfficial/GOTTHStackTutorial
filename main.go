@@ -17,7 +17,6 @@ func main() {
 	//	statictemplates, err := template.ParseGlob("static/.html")
 	//	slicedtemplates, err := template.ParseGlob("slices/.html")
 
-	mux.Handle("/", fs)
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		t, err := template.ParseFiles("static/index.html", "slices/genericfooter.html", "slices/genericheader.html")
 		if err != nil {
@@ -25,6 +24,9 @@ func main() {
 		}
 		t.Execute(w, nil)
 	})
+
+	mux.Handle("/", fs)
+
 	mux.HandleFunc("GET /home", func(w http.ResponseWriter, r *http.Request) {
 		t, err := template.ParseFiles("static/index.html", "slices/genericfooter.html", "slices/genericheader.html")
 		if err != nil {
@@ -145,5 +147,6 @@ func main() {
 
 	})
 
+	fmt.Printf("localhost:8080 + \n")
 	http.ListenAndServe(":8080", mux)
 }

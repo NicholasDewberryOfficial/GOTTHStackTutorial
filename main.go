@@ -28,6 +28,7 @@ func main() {
 	mux.Handle("/", fs)
 
 	mux.HandleFunc("GET /home", func(w http.ResponseWriter, r *http.Request) {
+		//yeah, parsing all these files is a mess and I can do better. But how?
 		t, err := template.ParseFiles("static/index.html", "slices/genericfooter.html", "slices/genericheader.html")
 		if err != nil {
 			panic(err)
@@ -44,6 +45,7 @@ func main() {
 
 	})
 
+	//this function is GENIUS!
 	mux.HandleFunc("GET /showmewhygoth/{num}", func(w http.ResponseWriter, r *http.Request) {
 
 		tutparam := r.PathValue("num")
@@ -71,6 +73,12 @@ func main() {
 			parsethisfile = "slices/whyopinionatedgotth.html"
 		case 4:
 			parsethisfile = "slices/whoisthisfor.html"
+		case 5:
+			parsethisfile = "slices/experiencewithaitools.html"
+		case 6:
+			parsethisfile = "slices/whynotdaisyui.html"
+		case 10:
+			parsethisfile = "slices/whynoframeworkslice.html"
 		}
 		t, err := template.ParseFiles(parsethisfile)
 		if err != nil {
@@ -108,7 +116,8 @@ func main() {
 		intparam, err := strconv.Atoi(tutparam)
 		if err != nil {
 
-			panic(err)
+			fmt.Fprintf(w, "404 error.", http.StatusGone)
+			return
 		}
 		parseThisFile := "static/tutorials.html"
 
@@ -128,7 +137,7 @@ func main() {
 			parseThisFile = "static/novicetailwind.html"
 		}
 
-		t, err := template.ParseFiles(parseThisFile)
+		t, err := template.ParseFiles(parseThisFile, "slices/genericheader.html", "slices/genericfooter.html")
 		if err != nil {
 			fmt.Printf(err.Error())
 			return

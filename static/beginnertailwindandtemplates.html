@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+    {{ template "genericheader" . }}
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Main Section -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Overview Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">1. Overview</h2>
+                <p class="leading-relaxed mb-3">
+                    In this tutorial, you’ll create a Go web server that uses
+                    the
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >html/template</code
+                    >
+                    package to serve dynamic HTML pages, and leverages
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >Tailwind CSS</code
+                    >
+                    for styling. By the end, you'll have a clean, maintainable
+                    approach for structuring your web application.
+                </p>
+            </section>
+
+            <!-- Project Structure Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    2. Project Structure
+                </h2>
+                <p class="leading-relaxed mb-3">
+                    Here’s a simple, recommended file layout:
+                </p>
+                <pre
+                    class="bg-gray-800 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+            <code class="text-gray-200">
+            my-project/
+            ├── go.mod
+            ├── main.go
+            └── templates/
+                ├── base.html
+                ├── index.html
+                └── (other templates)
+            </code>
+                  </pre>
+                <p class="leading-relaxed">
+                    - <strong>go.mod</strong> holds your Go module info
+                    (dependencies). <br />
+                    - <strong>main.go</strong> is your entry point, containing
+                    <code>func main()</code>.<br />
+                    - <strong>templates/</strong> keeps your HTML files. You can
+                    split them however you like.
+                </p>
+            </section>
+
+            <!-- Go Module Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    3. Initialize Your Go Module
+                </h2>
+                <p class="leading-relaxed mb-3">
+                    If you’re using modules (recommended for Go 1.13+), navigate
+                    to your folder and run:
+                </p>
+                <pre
+                    class="bg-gray-800 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+            <code class="text-gray-200">
+            cd my-project
+            go mod init github.com/yourusername/my-project
+            </code>
+                  </pre>
+                <p class="leading-relaxed">
+                    This creates a
+                    <code class="bg-gray-800 px-1 py-0.5 rounded">go.mod</code>
+                    file tracking your dependencies.
+                </p>
+            </section>
+
+            <!-- Templates Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    4. Create Your HTML Templates
+                </h2>
+                <p class="leading-relaxed mb-3">
+                    Tailwind can be included via a CDN link or by locally
+                    building the CSS. For simplicity, we’ll use a CDN. You can
+                    place the link in a <strong>base layout</strong>
+                    so all pages inherit it.
+                </p>
+
+                <!-- base.html -->
+                <h3 class="text-xl font-semibold mb-2">
+                    4.1 base.html (Layout)
+                </h3>
+                <pre
+                    class="bg-gray-800 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+            <code class="text-gray-200">
+            &lt;!-- templates/base.html --&gt;
+            &lt;!DOCTYPE html&gt;
+            &lt;html lang=&quot;en&quot;&gt;
+            &lt;head&gt;
+              &lt;meta charset=&quot;UTF-8&quot;&gt;
+              &lt;title&gt;{{block &quot;title&quot; .}}My Go App{{end}}&lt;/title&gt;
+              &lt;link href=&quot;https://cdn.jsdelivr.net/npm/tailwindcss@3.3.1/dist/tailwind.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+            &lt;/head&gt;
+            &lt;body class=&quot;bg-gray-900 text-gray-100 font-sans&quot;&gt;
+
+              {{/* Navigation or header content goes here, if desired */}}
+
+              {{/* Where child templates inject their own content */}}
+              {{block &quot;content&quot; .}}{{end}}
+
+              {{/* A footer could also go here */}}
+
+            &lt;/body&gt;
+            &lt;/html&gt;
+            </code>
+                  </pre>
+
+                <!-- index.html -->
+                <h3 class="text-xl font-semibold mb-2">
+                    4.2 index.html (Child Template)
+                </h3>
+                <p class="leading-relaxed mb-3">
+                    In the <code>index.html</code> file, define the
+                    <strong>title</strong> and <strong>content</strong> blocks
+                    to override what’s in <code>base.html</code>:
+                </p>
+                <pre
+                    class="bg-gray-800 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+            <code class="text-gray-200">
+            &lt;!-- templates/index.html --&gt;
+            {{define &quot;title&quot;}}Home Page{{end}}
+
+            {{define &quot;content&quot;}}
+            &lt;div class=&quot;container mx-auto p-4&quot;&gt;
+              &lt;h1 class=&quot;text-2xl font-bold mb-4&quot;&gt;Welcome to My Go + Tailwind Site!&lt;/h1&gt;
+              &lt;p class=&quot;leading-relaxed mb-4&quot;&gt;
+                This page is styled with Tailwind CSS, served by a simple Go server.
+              &lt;/p&gt;
+              &lt;a href=&quot;/about&quot; class=&quot;bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded&quot;&gt;
+                About
+              &lt;/a&gt;
+            &lt;/div&gt;
+            {{end}}
+            </code>
+                  </pre>
+                <p class="leading-relaxed">
+                    Note how we use
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >Tailwind</code
+                    >
+                    classes (e.g.,
+                    <code class="bg-gray-800 px-1 py-0.5 rounded">text-2xl</code
+                    >,
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >bg-teal-500</code
+                    >) in HTML for styling.
+                </p>
+            </section>
+
+            <!-- Go Server Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    5. Write the Go Server (main.go)
+                </h2>
+                <p class="leading-relaxed mb-3">
+                    Below is a minimal example that parses the templates and
+                    serves
+                    <code>index.html</code> and a hypothetical
+                    <code>about.html</code>:
+                </p>
+                <pre
+                    class="bg-gray-800 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+            <code class="text-gray-200">
+            package main
+
+            import (
+                &quot;fmt&quot;
+                &quot;html/template&quot;
+                &quot;log&quot;
+                &quot;net/http&quot;
+            )
+
+            var tmpl *template.Template
+
+            func main() {
+                // Parse all .html files in the templates folder
+                var err error
+                tmpl, err = template.ParseGlob(&quot;templates/*.html&quot;)
+                if err != nil {
+                    log.Fatalf(&quot;Error parsing templates: %v&quot;, err)
+                }
+
+                // Register routes
+                http.HandleFunc(&quot;/&quot;, indexHandler)
+                http.HandleFunc(&quot;/about&quot;, aboutHandler)
+
+                // Start server
+                fmt.Println(&quot;Server running on http://localhost:8080&quot;)
+                if err := http.ListenAndServe(&quot;:8080&quot;, nil); err != nil {
+                    log.Fatalf(&quot;Server failed: %v&quot;, err)
+                }
+            }
+
+            func indexHandler(w http.ResponseWriter, r *http.Request) {
+                // Render index.html (which uses base.html)
+                if err := tmpl.ExecuteTemplate(w, &quot;index.html&quot;, nil); err != nil {
+                    http.Error(w, err.Error(), http.StatusInternalServerError)
+                }
+            }
+
+            func aboutHandler(w http.ResponseWriter, r *http.Request) {
+                // Suppose you also have about.html
+                if err := tmpl.ExecuteTemplate(w, &quot;about.html&quot;, nil); err != nil {
+                    http.Error(w, err.Error(), http.StatusInternalServerError)
+                }
+            }
+            </code>
+                  </pre>
+                <p class="leading-relaxed">
+                    This setup ensures all HTML files in
+                    <code>templates/</code> are loaded at startup, letting you
+                    reuse <code>base.html</code> for consistent styling.
+                </p>
+            </section>
+
+            <!-- Tailwind Options Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    6. Tailwind: CDN vs. Local Build
+                </h2>
+                <p class="leading-relaxed mb-3">
+                    The above example uses a <strong>CDN link</strong> for
+                    Tailwind – the simplest approach. For advanced customization
+                    (e.g., <code>tailwind.config.js</code>), you can
+                    <strong>build your own</strong>
+                    Tailwind CSS and reference a local file. That process
+                    typically involves:
+                </p>
+                <ul class="list-disc list-inside mb-3 ml-4 text-gray-200">
+                    <li>
+                        Initializing Node in your project:
+                        <code class="bg-gray-800 px-1 py-0.5 rounded"
+                            >npm init -y</code
+                        >
+                    </li>
+                    <li>
+                        Installing dev dependencies:
+                        <code class="bg-gray-800 px-1 py-0.5 rounded"
+                            >npm install -D tailwindcss postcss
+                            autoprefixer</code
+                        >
+                    </li>
+                    <li>
+                        Creating a <code>tailwind.config.js</code> file,
+                        pointing <code>content</code> to your HTML/Go files.
+                    </li>
+                    <li>
+                        Compiling your CSS with
+                        <code class="bg-gray-800 px-1 py-0.5 rounded"
+                            >npx tailwindcss -i ./input.css -o
+                            ./static/tailwind.css --watch</code
+                        >.
+                    </li>
+                    <li>
+                        Referencing
+                        <code class="bg-gray-800 px-1 py-0.5 rounded"
+                            >/static/tailwind.css</code
+                        >
+                        in <code>base.html</code>.
+                    </li>
+                </ul>
+                <p class="leading-relaxed">
+                    For most small apps, the **CDN** method is perfectly fine.
+                </p>
+            </section>
+
+            <!-- Testing Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    7. Testing Your Setup
+                </h2>
+                <p class="leading-relaxed">
+                    1. Run
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >go run main.go</code
+                    >
+                    in your project root.<br />
+                    2. Visit
+                    <a
+                        href="http://localhost:8080"
+                        class="text-blue-400 hover:text-blue-300 underline"
+                        >http://localhost:8080</a
+                    >
+                    in your browser.<br />
+                    3. You should see a page with the Tailwind styling (dark
+                    background, large headings, etc.).<br />
+                    4. Navigate to <code>/about</code> if you have an
+                    <code>about.html</code> page set up similarly.
+                </p>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">8. FAQ</h2>
+                <p class="leading-relaxed mb-2">
+                    <strong>Q:</strong> Can I pass data to the templates?
+                    <br />
+                    <strong>A:</strong> Absolutely. Create a struct (e.g.,
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >type PageData struct</code
+                    >), fill it with data, and pass it as the final argument in
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >ExecuteTemplate</code
+                    >.
+                </p>
+
+                <p class="leading-relaxed mb-2">
+                    <strong>Q:</strong> Where do I put images or static files?
+                    <br />
+                    <strong>A:</strong> You can serve them from a
+                    <code>/static</code> directory. For example:
+                </p>
+                <pre
+                    class="bg-gray-800 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+            <code class="text-gray-200">
+            http.Handle(&quot;/static/&quot;, http.StripPrefix(&quot;/static/&quot;, http.FileServer(http.Dir(&quot;static&quot;))))
+            </code>
+                  </pre>
+                <p class="leading-relaxed">
+                    Then reference your static content via
+                    <code>/static/...</code> paths in your templates.
+                </p>
+            </section>
+
+            <!-- Summary Section -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">9. Summary</h2>
+                <p class="leading-relaxed">
+                    By following these steps, you’ve created a
+                    <strong>Go web server</strong> that uses
+                    <strong>HTML templates</strong> and
+                    <strong>Tailwind CSS</strong>. This setup keeps your code
+                    clean, your front-end styling powerful, and your build
+                    process straightforward. From here, you can:
+                </p>
+                <ul class="list-disc list-inside ml-4 text-gray-200 mb-4">
+                    <li>
+                        Extend your templates with partials (e.g.,
+                        <code>header.html</code>, <code>footer.html</code>)
+                    </li>
+                    <li>Pass dynamic data into your pages</li>
+                    <li>
+                        Incorporate other tools like <strong>htmx</strong> or
+                        JavaScript frameworks if needed
+                    </li>
+                </ul>
+                <p class="leading-relaxed">
+                    With Tailwind’s utility classes, you can rapidly build
+                    responsive, modern UIs without manually writing much CSS.
+                    Enjoy your new Go + Tailwind stack!
+                </p>
+            </section>
+
+            {{ template "genericfooter" . }}
+        </main>
+    </body>
+</html>

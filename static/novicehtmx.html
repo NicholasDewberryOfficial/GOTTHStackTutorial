@@ -10,37 +10,7 @@
     </head>
     <body class="bg-gray-900 text-teal-100 font-sans">
         <!-- Header (same as on other pages) -->
-        <header class="bg-gray-800">
-            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
-                <ul class="flex space-x-4">
-                    <li>
-                        <a
-                            href="index.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="tutorials.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Tutorials
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            About
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        {{ template "genericheader" . }}
 
         <!-- Main Content: Novice Intro to htmx -->
         <main class="container mx-auto px-4 py-8">
@@ -48,18 +18,35 @@
                 <h2 class="text-3xl font-semibold mb-4">A Short Introduction to htmx</h2>
                 <p class="mb-4 leading-relaxed">
                     htmx is a small JavaScript library that allows you to add dynamic features to
-                    your web pages without writing lots of client-side JavaScript. By using custom
-                    attributes, htmx can update parts of a page in response to user interaction or
-                    server responses, making your application feel more responsive while keeping your
-                    code clean and lightweight.
+                    your web pages without writing lots of client-side JavaScript. Basically, you can use html to send
+                    data and requests over to the backend - which can in turn html to dynamically
                 </p>
 
                 <p class="mb-4 leading-relaxed">
-                    It handles many common scenarios such as submitting forms asynchronously and partial
-                    page updates easily. This lines up
-                    perfectly with the GOTTH stack’s aim to minimize complexity while still delivering
-                    modern, engaging web apps.
+                    Have you seen the teal blue buttons in the site? We use htmx for that. Below is an example of this. To summarize what's happening in the below example:
+                    <br> <br>
+                    -The button is set up to swap out its html when clicked
+                    <br>
+                    -The user clicks the button, and the frontend sends a request to the backend
+                    <br>
+                    -the backend recognizes this, and sends html data back
+                    <br> <br>
+                    This isn't a very complex example, but it's great thing to learn from. <a class="text-blue-300" href="https://github.com/NicholasDewberryOfficial/GOTTHStackTutorial/blob/main/static/novicehtmx.html"> Click here to look at the code!</a>
                 </p>
+
+                <br><br>
+
+                <button
+                    hx-get="/showmewhygoth/5"
+                    hx-swap="innerhtml"
+                    class="m-4 bg-indigo-900 text-blue-300 w-full mt-8 rounded-xl font-bold"
+                >
+                    Wait, go into more detail on your AI experience.
+                </button>
+
+                <br><br>
+
+
 
                 <p class="mb-4 leading-relaxed">
                     If you’re new to htmx, below are a few quick resources for learning how to integrate
@@ -80,9 +67,7 @@
                             – (MANDATORY VIEWING) A short video that demonstrates how to get started with HTMX.
                         </li>
                     </ul>
-                    <br>
-                    Embrace htmx, and you’ll write less JavaScript, spend more time focusing on your
-                    server-side logic, and keep your frontend code straightforward and elegant.
+
                 </p>
 
                 <p class="mb-4 leading-relaxed">
@@ -94,12 +79,6 @@
         </main>
 
         <!-- Footer (same as on other pages) -->
-        <footer class="bg-gray-800 text-center py-4">
-            <p>
-                Designed by
-                <span class="font-semibold">Nicholas Dewberry</span>
-            </p>
-            <p class="text-sm">&copy; 2025 All rights reserved.</p>
-        </footer>
+        {{ template "genericfooter" . }}
     </body>
 </html>

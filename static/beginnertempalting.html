@@ -10,39 +10,7 @@
     </head>
     <body class="bg-gray-900 text-teal-100 font-sans">
         <!-- Header (same as on other pages) -->
-        <header class="bg-gray-800">
-            <nav
-                class="container mx-auto px-4 py-4 flex justify-between items-center"
-            >
-                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
-                <ul class="flex space-x-4">
-                    <li>
-                        <a
-                            href="index.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="tutorials.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Tutorials
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            About
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        {{ template "genericheader" . }}
 
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">
@@ -92,7 +60,8 @@ func main() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         tmpl, err := template.ParseFiles("index.html") //Note how we're using the walrus operator to get the value to the parsed template, but also the error.
         if err != nil {
-            log.Fatal(err)
+            log.Fatal(err) //NOTE: I use log fatal and panic(err) a lot, but there are better ways to handle errors in Go.
+            //For example, if the template doesn't parse, you could catch it and instead redirect the user to a "440: resource not found" page
         }
         tmpl.Execute(w, nil)
     })
@@ -343,12 +312,6 @@ func main() {
         </main>
 
         <!-- Footer (same as on other pages) -->
-        <footer class="bg-gray-800 text-center py-4">
-            <p>
-                Designed by
-                <span class="font-semibold">Nicholas Dewberry</span>
-            </p>
-            <p class="text-sm">&copy; 2025 All rights reserved.</p>
-        </footer>
+        {{ template "genericfooter" . }}
     </body>
 </html>

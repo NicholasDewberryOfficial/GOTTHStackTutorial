@@ -1,46 +1,7 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Intro to net/http</title>
-
-        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
-        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    </head>
+    {{ template "genericheader" . }}
     <body class="bg-gray-900 text-teal-100 font-sans">
-        <!-- Header (same as on other pages) -->
-        <header class="bg-gray-800">
-            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
-                <ul class="flex space-x-4">
-                    <li>
-                        <a
-                            href="index.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="tutorials.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Tutorials
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            About
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
 
         <!-- Main Content: Novice Intro to net/http -->
         <main class="container mx-auto px-4 py-8">
@@ -50,8 +11,7 @@
                 <p class="mb-4 leading-relaxed">
                     The <code class="bg-stone-700 px-1 py-0.5 rounded">net/http</code> package is part of
                     Go’s standard library and provides everything you need to build HTTP servers (and
-                    make HTTP requests) with minimal setup. It’s widely used for web development, REST APIs,
-                    and other network-related applications.
+                    make HTTP requests).
                 </p>
 
                 <p class="mb-4 leading-relaxed">
@@ -85,8 +45,17 @@ func main() {
                 </p>
 
                 <p class="mb-4 leading-relaxed">
-                    If you want to run a web server in Go, there are a wide variety of frameworks. Most of them still have their place and purpose - however for most use cases net/http offers the best development experience. If you're a new web developer, stick to net/http, but if you're more familiar with Chi/Fiber, you can easily transfer your skillset for this tutorial.
+                    If you want to run a web server in Go, there are a wide variety of frameworks. Most of them still have their place and purpose - however for most use cases net/http offers the best development experience.
+                    If you're a new web developer, stick to net/http, but if you're more familiar with Chi/Fiber, you can easily transfer your skillset for this tutorial.
                 </p>
+
+                <button
+                    hx-get="/showmewhygoth/10"
+                    hx-swap="innerhtml"
+                    class="m-4 bg-indigo-900 text-blue-300 w-full mt-8 rounded-xl font-bold"
+                >
+                    Wait - can you go into more detail about why we don't use frameworks?
+                </button>
 
                 <p class="mb-4 leading-relaxed">
                     Below are a few resources to help you dive deeper:
@@ -132,12 +101,6 @@ func main() {
         </main>
 
         <!-- Footer (same as on other pages) -->
-        <footer class="bg-gray-800 text-center py-4">
-            <p>
-                Designed by
-                <span class="font-semibold">Nicholas Dewberry</span>
-            </p>
-            <p class="text-sm">&copy; 2025 All rights reserved.</p>
-        </footer>
+        {{ template "genericfooter" . }}
     </body>
 </html>

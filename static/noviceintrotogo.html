@@ -10,39 +10,7 @@
     </head>
     <body class="bg-gray-900 text-teal-100 font-sans">
         <!-- Header (same as on other pages) -->
-        <header class="bg-gray-800">
-            <nav
-                class="container mx-auto px-4 py-4 flex justify-between items-center"
-            >
-                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
-                <ul class="flex space-x-4">
-                    <li>
-                        <a
-                            href="index.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="tutorials.html"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Tutorials
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            About
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        {{ template "genericheader" . }}
 
         <!-- Main Content: Short Intro to Go -->
         <main class="container mx-auto px-4 py-8">
@@ -88,12 +56,6 @@
         </main>
 
         <!-- Footer (same as on other pages) -->
-        <footer class="bg-gray-800 text-center py-4">
-            <p>
-                Designed by
-                <span class="font-semibold">Nicholas Dewberry</span>
-            </p>
-            <p class="text-sm">&copy; 2025 All rights reserved.</p>
-        </footer>
+        {{ template "genericfooter" . }}
     </body>
 </html>

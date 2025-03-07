@@ -1,36 +1,7 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Why GOTTH</title>
-
-        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-        <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-    </head>
+    {{ template "genericheader" . }}
     <body class="bg-gray-900 text-teal-100 font-sans">
-        <!-- Header / Navigation (same as on index.html) -->
-        <header class="bg-gray-800">
-            <nav
-                class="container mx-auto px-4 py-4 flex justify-between items-center"
-            >
-                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
-                <ul class="flex space-x-4">
-                    <li>
-                        <a href="index.html" class="hover:text-teal-400"
-                            >Home</a
-                        >
-                    </li>
-                    <li>
-                        <a href="/tutorials" class="hover:text-teal-400"
-                            >Tutorials</a
-                        >
-                    </li>
-                    <li><a href="#" class="hover:text-teal-400">About</a></li>
-                </ul>
-            </nav>
-        </header>
-
         <!-- Main Content Section (Blog Post) -->
         <main class="container mx-auto px-4 py-8 text-justify">
             <!-- Why GOTTH -->
@@ -46,6 +17,15 @@
                     class="m-4 bg-indigo-900 text-blue-300 w-full mt-8 rounded-xl font-bold"
                 >
                     I need more than that.
+                </button>
+                <br />
+                <button
+                    hx-get="/showmewhygoth/10"
+                    hx-swap="innerhtml"
+                    class="m-4 bg-indigo-900 text-blue-300 w-full mt-8 rounded-xl font-bold"
+                >
+                    Why do you use net/http instead of using a dedicated web
+                    framework? (warning: long)
                 </button>
 
                 <h2 class="text-3xl font-semibold mb-4">Why GOTTH?</h2>
@@ -148,9 +128,11 @@
                             debugging (delve)? Go right ahead.
                         </li>
                         <li>
-                            Extensible frontend. Can't live without (insert
-                            frontend library here)? Well, with some tweaking you
-                            can get it working.
+                            Extensible frontend. Can't live without
+                            React/Sveltea Cheese/Goober .js? (Okay, the last one
+                            was supposed to be a joke but it's actually a pretty
+                            cool project) Well, with some tweaking you can get
+                            it working.
                         </li>
                         <li>
                             It teaches you a lot about web development, without
@@ -161,11 +143,20 @@
                     <ul class="list-disc list-inside">
                         <li>
                             Less conventional than popular JS frameworks, so
-                            smaller community and less online support. ChatGPT
-                            is good with dealing with individual parts (the Go
+                            smaller community and less online support. AI is
+                            good with dealing with individual parts (the Go
                             code, the HTMX code, Tailwind styling) but struggles
                             to "bring it all together".
                         </li>
+
+                        <button
+                            hx-get="/showmewhygoth/5"
+                            hx-swap="innerhtml"
+                            class="m-4 bg-indigo-900 text-blue-300 w-full mt-8 rounded-xl font-bold"
+                        >
+                            Wait, go into more detail on your AI experience.
+                        </button>
+
                         <li>
                             An intense learning curve - none of this is taught
                             in University classes, and this is all extremely
@@ -184,7 +175,13 @@
                             Tailwind css encourages "copy+paste development"
                             with many repeated sections.
                         </li>
-                        <button>Why not just use DaisyUI?</button>
+                        <button
+                            hx-get="/showmewhygoth/6"
+                            hx-swap="innerhtml"
+                            class="m-4 bg-indigo-900 text-blue-300 w-full mt-8 rounded-xl font-bold"
+                        >
+                            Why not just use DaisyUI?
+                        </button>
                         <li>
                             Debugging is hard - we're using so many
                             interconnected technologies, and identifying which
@@ -232,13 +229,6 @@
             </section>
         </main>
 
-        <!-- Footer (same as on index.html) -->
-        <footer class="bg-gray-800 text-center py-4">
-            <p>
-                Designed by
-                <span class="font-semibold">Nicholas Dewberry</span>
-            </p>
-            <p class="text-sm">&copy; 2025 All rights reserved.</p>
-        </footer>
+        {{ template "genericfooter" . }}
     </body>
 </html>

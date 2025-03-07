@@ -10,37 +10,7 @@
     </head>
     <body class="bg-gray-900 text-teal-100 font-sans">
         <!-- Header (same as on other pages) -->
-        <header class="bg-gray-800">
-            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
-                <ul class="flex space-x-4">
-                    <li>
-                        <a
-                            href="/"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="/tutorials"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            Tutorials
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
-                        >
-                            About
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        {{ template "genericheader" . }}
 
         <!-- Main Content: Intro to Tailwind -->
         <main class="container mx-auto px-4 py-8">
@@ -48,10 +18,9 @@
                 <h2 class="text-3xl font-semibold mb-4">A Short Introduction to Tailwind CSS</h2>
 
                 <p class="mb-4 leading-relaxed">
-                    Tailwind CSS is a utility-first CSS framework that gives you low-level, composable classes
-                    to design your UI without having to write custom CSS. Rather than providing pre-designed
-                    components, Tailwind’s approach focuses on flexibility and speed, letting you rapidly
-                    prototype any layout or design.
+                    Tailwind CSS is a framework that you can use to quickly and easily modify how HTML elements look.
+                    You can do a wide variety of things; from simply changing text/background color to adding columns and grid layouts.
+                    You can even add animations, shadows, filters and borders to objects too. It's an extremely deep frontend tool you can use
                 </p>
 
                 <p class="mb-4 leading-relaxed">
@@ -61,10 +30,7 @@
                 </p>
 
                 <p class="mb-4 leading-relaxed">
-                    Working in the GOTTH stack, Tailwind CSS allows you to style your Go templates and htmx
-                    snippets without cluttering your project with large CSS files or complicated builds.
-                    If you understand basic HTML and CSS concepts, adding Tailwind is as easy as including
-                    a script or stylesheet and then applying the appropriate utility classes.
+                    Working in the GOTTH stack, we use Tailwind to make sure everything looks good. It's not for interactivity (it can be) or programming - it's solely for visual flair.
                 </p>
 
                 <p class="mb-4 leading-relaxed">
@@ -116,12 +82,6 @@
         </main>
 
         <!-- Footer (same as on other pages) -->
-        <footer class="bg-gray-800 text-center py-4">
-            <p>
-                Designed by
-                <span class="font-semibold">Nicholas Dewberry</span>
-            </p>
-            <p class="text-sm">&copy; 2025 All rights reserved.</p>
-        </footer>
+      {{ template "genericfooter" . }}
     </body>
 </html>

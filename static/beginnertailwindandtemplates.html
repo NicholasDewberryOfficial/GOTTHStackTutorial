@@ -102,17 +102,17 @@
             &lt;html lang=&quot;en&quot;&gt;
             &lt;head&gt;
               &lt;meta charset=&quot;UTF-8&quot;&gt;
-              &lt;title&gt;{{block &quot;title&quot; .}}My Go App{{end}}&lt;/title&gt;
+              &lt;title&gt;&#123;&#123;block &quot;title&quot; .}}My Go App&#123;&#123;end}}&lt;/title&gt;
               &lt;link href=&quot;https://cdn.jsdelivr.net/npm/tailwindcss@3.3.1/dist/tailwind.min.css&quot; rel=&quot;stylesheet&quot;&gt;
             &lt;/head&gt;
             &lt;body class=&quot;bg-gray-900 text-gray-100 font-sans&quot;&gt;
 
-              {{/* Navigation or header content goes here, if desired */}}
+              &#123;&#123;/* Navigation or header content goes here, if desired */}}
 
-              {{/* Where child templates inject their own content */}}
-              {{block &quot;content&quot; .}}{{end}}
+              &#123;&#123;/* Where child templates inject their own content */}}
+              &#123;&#123;block &quot;content&quot; .}}&#123;&#123;end}}
 
-              {{/* A footer could also go here */}}
+              &#123;&#123;/* A footer could also go here */}}
 
             &lt;/body&gt;
             &lt;/html&gt;
@@ -133,9 +133,9 @@
                 >
             <code class="text-gray-200">
             &lt;!-- templates/index.html --&gt;
-            {{define &quot;title&quot;}}Home Page{{end}}
+            &#123;&#123;define &quot;title&quot;}}Home Page&#123;&#123;end}}
 
-            {{define &quot;content&quot;}}
+            &#123;&#123;define &quot;content&quot;}}
             &lt;div class=&quot;container mx-auto p-4&quot;&gt;
               &lt;h1 class=&quot;text-2xl font-bold mb-4&quot;&gt;Welcome to My Go + Tailwind Site!&lt;/h1&gt;
               &lt;p class=&quot;leading-relaxed mb-4&quot;&gt;
@@ -145,7 +145,7 @@
                 About
               &lt;/a&gt;
             &lt;/div&gt;
-            {{end}}
+            &#123;&#123;end}}
             </code>
                   </pre>
                 <p class="leading-relaxed">

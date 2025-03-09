@@ -4,9 +4,45 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Beginner - Starting a Go server</title>
+
+        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
+        <script src="tailwindminified.js"></script>
     </head>
     <body class="bg-gray-900 text-teal-100 font-sans">
-        {{ template "genericheader" . }}
+        <!-- Header (same as on other pages) -->
+        <header class="bg-gray-800">
+            <nav
+                class="container mx-auto px-4 py-4 flex justify-between items-center"
+            >
+                <h1 class="text-xl font-bold">GOTTH for people in a rush</h1>
+                <ul class="flex space-x-4">
+                    <li>
+                        <a
+                            href="index.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="tutorials.html"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            Tutorials
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="#"
+                            class="inline-block px-3 py-1 rounded bg-teal-900 text-teal-100 hover:bg-teal-700 transition-colors"
+                        >
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8">

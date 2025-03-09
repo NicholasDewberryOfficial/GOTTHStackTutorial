@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTMX + Go + Tailwind + Templates: A Complex Example</title>
+  <!-- Dark/Teal Theme for the tutorial page -->
+  {{ template "genericheader" . }}
+</head>
+<body class="bg-gray-900 text-teal-100 font-sans">
+
+  <!-- Main Container -->
+  <div class="container mx-auto px-4 py-8">
+
+    <!-- Tutorial Header -->
+    <header class="mb-6 text-center">
+      <h1 class="text-3xl font-bold mb-2">Building a Complex HTMX + Go + Tailwind + Template App</h1>
+      <p class="text-teal-300">
+        A multi-page project demonstrating advanced Go templates, HTMX interactions, and Tailwind styling.
+      </p>
+    </header>
+
+    <!-- Constrained Content Width -->
+    <section class="max-w-3xl mx-auto text-justify">
+      <!-- Introduction -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">1. Introduction</h2>
+        <p class="leading-relaxed mb-4">
+          In this tutorial, we’ll build a <strong>multi-page</strong> Go application that uses:
+        </p>
+        <ul class="list-disc list-inside ml-4 mb-4">
+          <li>
+            <strong>Go templates</strong> with a layout and partials
+          </li>
+          <li>
+            <strong>HTMX</strong> for three distinct interactions:
+            <ol class="list-decimal list-inside ml-6">
+              <li>Pressing a button to display a Tailwind-styled element with server-provided data (e.g., <code>&#x7B;&#x7B;.Username&#x7D;&#x7D;</code>).</li>
+              <li>Switching between two different button styles/elements (toggle) using <code>hx-target</code>.</li>
+              <li>Using <code>range</code> in a Go template to display multiple repeated snippets.</li>
+            </ol>
+          </li>
+          <li>
+            <strong>Tailwind CSS</strong> for more advanced styling
+          </li>
+        </ul>
+        <p class="leading-relaxed">
+          We won’t discuss why you might choose these technologies &mdash; we’ll simply show <em>how</em> to
+          integrate them for a richer user experience.
+        </p>
+      </section>
+
+      <!-- Project Layout -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">2. Project Layout</h2>
+        <p class="leading-relaxed mb-4">
+          Below is one suggested folder structure:
+        </p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+my-complex-htmx/
+├── go.mod
+├── main.go
+└── templates/
+    ├── base.html          (layout file)
+    |── header.html
+    │── footer.html
+    ├── index.html         (home page)
+    ├── custombutton.html  (button snippet w/ .Username)
+    ├── button1.html       (first toggle state)
+    ├── button2.html       (second toggle state)
+    └── range.html         (demonstrate &#x7B;&#x7Brange .&#x7D;&#x7D;)
+        </pre>
+        <p class="leading-relaxed">
+          - <strong>base.html</strong> defines a main layout block.<br>
+          - <strong>header.html</strong> and <strong>footer.html</strong> hold shared elements.<br>
+          - <strong>index.html</strong> is the home page, referencing the layout.<br>
+          - <strong>custombutton.html</strong> is for the button example that reveals server-sent data.<br>
+          - <strong>button1.html</strong> / <strong>button2.html</strong> are toggled by HTMX.<br>
+          - <strong>range.html</strong> uses <code>range</code> to repeat a snippet multiple times.
+        </p>
+      </section>
+
+      <!-- Base Layout & Partials -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">3. Layout &amp; Partial Templates</h2>
+
+        <!-- base.html -->
+        <p class="leading-relaxed mb-2 font-semibold">base.html</p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+            &#60;!-- CODE BLOCK --&#62;
+            &#x7B;&#x7B;define "base"}}
+            &#60;!doctype html&#62;
+            &#60;html&#62;
+                &#60;head&#62;
+                    &#60;meta charset="UTF-8" /&#62;
+                    &#60;title&#62;&#x7B;&#x7B;block "title" .}}My Complex HTMX App&#x7B;&#x7B;end}}&#60;/title&#62;
+                    &#60;!-- Tailwind &#38; HTMX --&#62;
+                    &#60;link
+                        href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.1/dist/tailwind.min.css"
+                        rel="stylesheet"
+                    /&#62;
+                    &#60;script src="https://unpkg.com/htmx.org@1.9.2"&#62;&#60;/script&#62;
+                &#60;/head&#62;
+                &#60;body class="bg-gray-900 text-teal-100 font-sans"&#62;
+                    &#x7B;&#x7B;template "partials/header.html" .}}
+
+                    &#60;main class="container mx-auto px-4 py-8"&#62;
+                        &#x7B;&#x7B;block "content" .}}&#x7B;&#x7B;end}}
+                    &#60;/main&#62;
+                &#60;/body&#62;
+            &#60;/html&#62;
+            &#x7B;&#x7B;end}}
+
+        </pre>
+
+        <p class="leading-relaxed mb-4">
+          This layout includes <strong>Tailwind</strong> (via CDN) and <strong>HTMX</strong>.
+          The main content block is injected with <code>&#x7B;&#x7B;block &quot;content&quot; .&#x7D;&#x7D;</code>,
+          while header and footer partials are pulled in with <code>&#x7B;&#x7B;template &quot;partials/header.html&quot; .&#x7D;&#x7D;</code>
+          and <code>&#x7B;&#x7B;template &quot;partials/footer.html&quot; .&#x7D;&#x7D;</code>.
+        </p>
+
+        <!-- header.html -->
+        <p class="leading-relaxed mb-2 font-semibold">partials/header.html</p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+            &#60;!-- CODE BLOCK --&#62;
+            &#x7B;&#x7B;define "partials/header.html"}}
+            &#60;header class="text-center py-4 border-b border-teal-700 mb-4"&#62;
+                &#60;h1 class="text-2xl font-bold"&#62;My Complex HTMX Example&#60;/h1&#62;
+                &#60;script src="https://unpkg.com/@tailwindcss/browser@4"&#62;&#60;/script&#62;
+                &#60;script src="https://unpkg.com/htmx.org@2.0.4"&#62;&#60;/script&#62;
+            &#60;/header&#62;
+            &#x7B;&#x7B;end}}
+
+        </pre>
+
+        <!-- footer.html -->
+        <p class="leading-relaxed mb-2 font-semibold">partials/footer.html</p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+            &#60;!-- CODE BLOCK --&#62;
+            &#x7B;&#x7B;define "partials/footer.html"}}
+            &#60;footer class="text-center py-4 border-t border-teal-700 mt-4"&#62;
+                &#60;p class="text-sm"&#62;&#38;copy; 2025 MyComplexHTMXApp. All rights reserved.&#60;/p&#62;
+            &#60;/footer&#62;
+            &#x7B;&#x7B;end}}
+
+        </pre>
+
+      </section>
+
+      <!-- Index.html (Home Page) -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">4. Home Page (index.html)</h2>
+        <p class="leading-relaxed mb-4">
+          Our home page extends <code>base.html</code>. We add links/buttons that route the user
+          to different examples or triggers an HTMX call. This is just a placeholder to get started.
+        </p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+<pre>
+    &#60;!-- CODE BLOCK --&#62;
+    &#x7B;&#x7B;define "base"}}
+    &#60;!doctype html&#62;
+    &#60;html&#62;
+        &#60;head&#62;
+            &#60;meta charset="UTF-8" /&#62;
+            &#60;title&#62;&#x7B;&#x7B;block "title" .}}My Complex HTMX App&#x7B;&#x7B;end}}&#60;/title&#62;
+            &#60;!-- Tailwind &#38; HTMX --&#62;
+            &#60;link
+                href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.1/dist/tailwind.min.css"
+                rel="stylesheet"
+            /&#62;
+            &#60;script src="https://unpkg.com/htmx.org@1.9.2"&#62;&#60;/script&#62;
+        &#60;/head&#62;
+        &#60;body class="bg-gray-900 text-teal-100 font-sans"&#62;
+            &#x7B;&#x7B;template "partials/header.html" .}}
+
+            &#60;main class="container mx-auto px-4 py-8"&#62;
+                &#x7B;&#x7B;block "content" .}}&#x7B;&#x7B;end}}
+            &#60;/main&#62;
+        &#60;/body&#62;
+    &#60;/html&#62;
+    &#x7B;&#x7B;end}}
+
+
+</pre>
+        </pre>
+
+      </section>
+
+      <!-- 1) Custom Button Example -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">5. Custom Button w/ Tailwind and HTMX</h2>
+        <p class="leading-relaxed mb-4">
+          When the user presses a button, an HTMX request fetches a <strong>Tailwind-styled</strong> snippet
+          that includes <code>&#x7B;&#x7B;.Username&#x7D;&#x7D;</code>. Let's define <code>custombutton.html</code>
+          as the snippet we’ll return from the server.
+        </p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+&#60;!-- CODE BLOCK --&#62;
+&#x7B;&#x7B;define "custombutton"}}
+&#60;div class="bg-teal-800 text-white p-4 rounded shadow"&#62;
+    &#60;p class="text-lg font-bold"&#62;Hello, &#x7B;&#x7B;.Username}}!&#60;/p&#62;
+    &#60;p&#62;This element was loaded from the server via HTMX.&#60;/p&#62;
+&#60;/div&#62;
+&#x7B;&#x7B;end}}
+
+        </pre>
+
+      </section>
+
+      <!-- 2) Toggle Button (button1.html & button2.html) -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">6. Toggling Between Two Elements</h2>
+        <p class="leading-relaxed mb-4">
+          We want two HTML snippets (<code>button1.html</code> and <code>button2.html</code>)
+          that swap when clicked. Each snippet has a button pointing to the opposite route.
+        </p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-2">
+            &#38;#60;!-- CODE BLOCK --&#38;#62;
+            &#x7B;&#x7B;define "partials/footer.html"}}
+            &#38;#60;footer class="text-center py-4 border-t border-teal-700 mt-4"&#38;#62;
+                &#38;#60;p class="text-sm"&#38;#62;&#38;#38;copy; 2025 MyComplexHTMXApp. All rights reserved.&#38;#60;/p&#38;#62;
+            &#38;#60;/footer&#38;#62;
+            &#x7B;&#x7B;end}}
+
+
+        </pre>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+            &#60;!-- CODE BLOCK --&#62;
+            &#x7B;&#x7B;define "button2"}}
+            &#60;button
+                hx-get="/toggle1"
+                hx-swap="outerHTML"
+                class="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded m-8"
+            &#62;
+                I'm BUTTON2. Click to swap!
+            &#60;/button&#62;
+            &#x7B;&#x7B;end}}
+
+        </pre>
+
+      </section>
+
+      <!-- 3) Range Example -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">7. Using Go's <code>&#x7B;&#x7B;range .}}</code> Operator</h2>
+        <p class="leading-relaxed mb-4">
+          Suppose we want to show multiple repeated snippets. Let's define <code>range.html</code>
+          like this, using <code>&#x7B;&#x7B;range .Items&#x7D;&#x7D;</code> to iterate over a slice from Go:
+        </p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+&lt;!-- CODE BLOCK --&gt;
+&#x7B;&#x7B;define "rangexample"}}
+&#60;div&#62;
+    &#60;h2 class="text-xl font-semibold mb-2"&#62;Range Example&#60;/h2&#62;
+
+    &#60;div class="bg-stone-800 rounded p-3 mb-2"&#62;
+        &#x7B;&#x7B;range . }}
+        &#60;p class="text-sm text-stone-300"&#62;Username: &#x7B;&#x7B; .Username }}&#60;/p&#62;
+        &#60;p class="text-sm text-stone-300"&#62;Item: &#x7B;&#x7B; .Items }}&#60;/p&#62;
+        &#x7B;&#x7Bend}}
+    &#60;/div&#62;
+&#60;/div&#62;
+&#x7B;&#x7B;end}}
+
+        </pre>
+
+      </section>
+
+      <section>
+
+          <h2 class="text-2xl font-semibold mb-4">8. Another <code>&#x7B;&#x7B;range .}}</code> example - array of elements</h2>
+          <p class="leading-relaxed mb-4">
+            Suppose we want to show a snippet where one thing stays the same, and everything else changes. Let's define <code>rangesecond.html</code>
+            like this, using <code>&#x7B;&#x7B;range .Items&#x7D;&#x7D;</code> to iterate over another slice.:
+          </p>
+          <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+              &#60;!-- CODE BLOCK --&#62;
+              &#x7B;&#x7B;define "secondrange"}}
+              &#60;div&#62;
+                  &#60;h2 class="text-xl font-semibold mb-2"&#62;Range Example&#60;/h2&#62;
+
+                  &#60;div class="bg-stone-800 rounded p-3 mb-2"&#62;
+                      &#60;p class="text-sm text-stone-300"&#62;Username: &#x7B;&#x7B; .Username }}&#60;/p&#62;
+                      &#x7B;&#x7B; range .Items }}
+                      &#60;p class="text-sm text-stone-300"&#62;Item: &#x7B;&#x7B; . }}&#60;/p&#62;
+                      &#x7B;&#x7B; end }}
+                  &#60;/div&#62;
+              &#60;/div&#62;
+              &#x7B;&#x7B;end}}
+
+          </pre>
+
+        </section>
+
+      </section>
+
+      <!-- Go Code: main.go -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">9. The Go Server (main.go)</h2>
+        <p class="leading-relaxed mb-4">
+          Next, let’s show how to wire up these routes. Notice we have multiple handlers:
+          <ul class="list-disc list-inside ml-4">
+            <li><code>indexHandler</code>: Renders <code>index.html</code>.</li>
+            <li><code>customButtonHandler</code>: Returns a page/snippet referencing <code>custombutton.html</code>.</li>
+            <li><code>toggleHandler</code>: Returns the initial toggle state (<code>button1.html</code>), plus <code>/toggle1</code> and <code>/toggle2</code> for the toggles themselves.</li>
+            <li><code>rangeHandler</code>: Renders <code>range.html</code> with a slice of items.</li>
+          </ul>
+        </p>
+        <pre class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4">
+// code block
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"log"
+	"net/http"
+)
+
+type UserData struct {
+	Username string
+	Items    string
+}
+
+var tmpl *template.Template
+
+func main() {
+	var err error
+	// Parse all .html files SUPER COMPLICATED GLOB PARSE
+	//Template matching is simple in Go, otherwise we'd have to use regex like: ("templates/[A-Za-z0-9]+/*[A-Za-z0-9]+(/[*])?/?.[A-Za-z0-9]+")
+	tmpl, err = template.ParseGlob("templates/*.html")
+	if err != nil {
+		log.Fatalf("Error parsing templates: %v", err)
+	}
+
+	// Routes
+	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/custombutton", customButtonHandler)
+	http.HandleFunc("/toggle", toggleHandler)
+
+	// For toggling:
+	http.HandleFunc("/toggle1", toggle1Handler)
+	http.HandleFunc("/toggle2", toggle2Handler)
+
+	http.HandleFunc("/range", rangeHandler)
+	http.HandleFunc("/extrarange", extrarangeHandler)
+
+	fmt.Println("Server running at http://localhost:8080")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+		//4 hours(!)
+	}
+}
+
+// 1) Home page
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	data := UserData{Username: "Guest"}
+	if err := tmpl.ExecuteTemplate(w, "index", data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// 2) Custom Button route
+func customButtonHandler(w http.ResponseWriter, r *http.Request) {
+	data := UserData{Username: "Alice"} // The name we inject
+	if err := tmpl.ExecuteTemplate(w, "custombutton", data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// 3) Toggle route
+func toggleHandler(w http.ResponseWriter, r *http.Request) {
+	// Return an initial button (button1)
+	if err := tmpl.ExecuteTemplate(w, "button2", nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func toggle1Handler(w http.ResponseWriter, r *http.Request) {
+	// Return button2 snippet
+	if err := tmpl.ExecuteTemplate(w, "button1", nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func toggle2Handler(w http.ResponseWriter, r *http.Request) {
+	// Return button1 snippet
+	if err := tmpl.ExecuteTemplate(w, "button2", nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// 4) Range route
+func rangeHandler(w http.ResponseWriter, r *http.Request) {
+	data2 := UserData{
+		Username: "TestUser2",
+		Items:    "B",
+	}
+	data1 := UserData{
+		Username: "TestUser1", // It orders itself. Testuser1 will appear ahead of 2
+		Items:    "A",
+	}
+	data3 := UserData{
+		Username: "TestUser3",
+		Items:    "C",
+	}
+
+	netdata := []UserData{data1, data2, data3}
+
+	if err := tmpl.ExecuteTemplate(w, "rangexample", netdata); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
+func extrarangeHandler(w http.ResponseWriter, r *http.Request) {
+	//Another example - this time with a list of items but with the user being the same
+
+	type NewUserData struct {
+		Username string
+		Items    []string
+	}
+
+	finaldata := NewUserData{
+		Username: "I_Got_Items!!",
+		Items:    []string{"Water", "Bread", "Fish"},
+	}
+
+	if err := tmpl.ExecuteTemplate(w, "secondrange", finaldata); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	fmt.Printf("Range is read!")
+}
+//end code slice
+        </pre>
+
+      </section>
+
+      <!-- Running & Testing -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">9. Running &amp; Testing</h2>
+        <p class="leading-relaxed">
+          1. In your project folder, run
+          <code class="bg-gray-800 px-1 py-0.5 rounded">go mod init</code> to initialize the go code. This should create a go.mod with "module main" at the top
+          <br>
+          2. Run <code class="bg-gray-800 px-1 py-0.5 rounded">go run main.go</code> to start the server.
+          <br>
+          3. Visit <a href="http://localhost:8080" class="underline text-teal-300 hover:text-teal-200">http://localhost:8080</a>
+             in your browser.
+          <br>
+          4. Click on the links to test:
+          <ul class="list-disc list-inside ml-4 mt-2">
+            <li>
+              <strong>Custom Button:</strong> Goes to <code>/custombutton</code>.
+              You can wrap it in a button on another page that does <code>hx-get=&quot;/custombutton&quot;</code>
+              or serve it directly.
+            </li>
+            <li>
+              <strong>Toggle:</strong> <code>/toggle</code> starts with <strong>button1.html</strong>.
+              Clicking swaps to <strong>button2.html</strong>, and back again.
+            </li>
+            <li>
+              <strong>Range Example:</strong> <code>/range</code> displays a repeated snippet for each item
+              in your <code>.Items</code> slice.
+            </li>
+          </ul>
+        </p>
+      </section>
+
+      <!-- Conclusion -->
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">10. Conclusion</h2>
+        <p class="leading-relaxed">
+          By combining <strong>Go templates</strong> (with a layout + partials), <strong>HTMX</strong> for dynamic requests,
+          and <strong>Tailwind</strong> for styling, you can build a <strong>multi-page</strong> site that feels both
+          modern and well-structured. Each snippet or page can independently use Tailwind’s
+          utility classes for consistent styling, while HTMX updates parts of the DOM with
+          minimal fuss. Enjoy building your advanced GOTTH stack!
+        </p>
+      </section>
+    </section>
+  </div>
+  {{ template "genericfooter" . }}
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Minimal HTMX + Go Tutorial</title>
+        <!-- Dark/Teal Theming (similar to previous pages) -->
+        {{ template "genericheader" . }}
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Main Container -->
+        <div class="container mx-auto px-4 py-8 max-w-3xl mx-auto text-justify">
+            <!-- Tutorial Header -->
+            <header class="mb-6 text-center">
+                <h1 class="text-3xl font-bold mb-2">
+                    Minimal HTMX + Go Tutorial
+                </h1>
+                <p class="text-teal-300">
+                    A concise guide on using HTMX with Go’s
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >net/http</code
+                    >
+                    and
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >html/template</code
+                    >.
+                </p>
+            </header>
+
+            <!-- Introduction -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">1. Overview</h2>
+                <p class="leading-relaxed mb-4">
+                    HTMX is a lightweight JavaScript library that makes it
+                    possible to add dynamic, partial page updates to your web
+                    app by using simple attributes in your HTML. In this
+                    tutorial, you’ll see how to integrate HTMX with a minimal Go
+                    backend. <br /><br />
+                    Now, HTMX is pretty hard to grasp (it took me forever), so
+                    make sure to follow this step by step. Remember, you can
+                    always look at the git repo for examples and to see how
+                    everything is implemented.
+                </p>
+            </section>
+
+            <!-- Project Structure -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    2. Project Structure
+                </h2>
+                <p class="leading-relaxed mb-4">
+                    A small folder layout might look like this:
+                </p>
+                <pre
+                    class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+<code>
+myproject/
+├── go.mod
+├── main.go
+└── templates/
+    ├── index.html
+</code>
+      </pre>
+                <p class="leading-relaxed">
+                    - <strong>go.mod</strong>: Go module/dependency file
+                    <br />
+                    - <strong>main.go</strong>: Contains your Go server code.<br />
+                    - <strong>templates</strong>: Houses any HTML templates,
+                    including <code>index.html</code>. For now, it's alone, but in the future we'll add more slices.
+                </p>
+            </section>
+
+            <!-- HTMX Setup -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">3. HTMX Setup</h2>
+                <p class="leading-relaxed mb-4">
+                    To use HTMX, just add its script tag to your HTML. In a
+                    basic setup, you can include this in the header in
+                    <code>index.html</code>:
+                </p>
+                <pre
+                    class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+&lt;script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"&gt; <br> &lt;/script&gt;
+</code>
+      </pre>
+                <p class="leading-relaxed">
+                    <br /><br />
+                    <p class="leading-relaxed">
+                        Using a CDN like this is good for trying it out, but it
+                        has flaws.
+                        <a
+                            class="bg-blue-900 text-blue-100"
+                            href="https://htmx.org/docs/#installing"
+                        >
+                            Look at the HTMX docs for proper installation.
+                        </a>
+                    </p>
+                    <br /><br />
+                    Once loaded, HTMX attributes like <code>hx-get</code>,
+                    <code>hx-post</code>, <code>hx-target</code>, etc., become
+                    available in your HTML, letting you request server data and
+                    update the page without a full reload.
+                </p>
+            </section>
+
+            <!-- HTML Example -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    4. A Minimal HTML Example
+                </h2>
+                <p class="leading-relaxed mb-4">
+                    Here’s a simple <code>index.html</code> that shows a button
+                    using <code>hx-get</code> to fetch content from
+                    <code>/snippet</code> and display it in a
+                    <code>&lt;div&gt;</code>:
+                </p>
+                <pre
+                    class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+<code>
+{{`{{define "index.html"}}`}}
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;HTMX + Go Example&lt;/title&gt;
+    &lt;script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"&gt; &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Minimal HTMX Demo&lt;/h1&gt;
+    &lt;button
+      hx-get=&quot;/snippet&quot;
+      hx-target=&quot;#snippet-area&quot;
+      hx-swap=&quot;innerHTML&quot;&gt;
+      Load Snippet
+    &lt;/button&gt;
+
+    &lt;div id=&quot;snippet-area&quot; style=&quot;margin-top: 1rem; border: 1px solid #ccc; padding: 1rem;&quot;&gt;
+      &lt;!-- Updated by the snippet response --&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+{{`{{end}}`}}
+</code>
+      </pre>
+                <p class="leading-relaxed">
+                    When clicked, the button sends a GET request to
+                    <code>/snippet</code> and injects the server’s response into
+                    <code>#snippet-area</code>.
+                </p>
+            </section>
+
+            <!-- Go Code -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">
+                    5. Minimal Go Code (main.go)
+                </h2>
+                <p class="leading-relaxed mb-4">Below is a Go server that:</p>
+                <ul class="list-disc list-inside ml-4 mb-4">
+                    <li>Parses all templates in <code>templates/</code></li>
+                    <li>Serves <code>index.html</code> at <code>/</code></li>
+                    <li>Serves a snippet of HTML at <code>/snippet</code></li>
+                </ul>
+                <pre
+                    class="bg-gray-800 text-teal-100 p-4 rounded text-sm overflow-x-auto mb-4"
+                >
+<code>
+package main
+
+import (
+    "fmt"
+    "html/template"
+    "log"
+    "net/http"
+)
+
+var tmpl *template.Template
+
+func main() {
+    // Parse all .html files in templates folder
+    var err error
+    tmpl, err = template.ParseGlob("templates/*.html")
+    if err != nil {
+        log.Fatalf("Error parsing templates: %v", err)
+    }
+
+    http.HandleFunc("/", indexHandler)
+    http.HandleFunc("/snippet", snippetHandler)
+
+    fmt.Println("Server running on http://localhost:8080")
+    if err := http.ListenAndServe(":8080", nil); err != nil {
+        log.Fatal(err)
+    }
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+    // Render index.html
+    if err := tmpl.ExecuteTemplate(w, "index.html", nil); err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
+}
+
+func snippetHandler(w http.ResponseWriter, r *http.Request) {
+    // Return a small HTML snippet
+    snippet := "&lt;p&gt; This snippet loaded via HTMX! &lt;p&gt;"
+
+    w.Header().Set("Content-Type", "text/html")
+    w.Write([]byte(snippet))
+}
+</code>
+      </pre>
+                <p class="leading-relaxed">
+                    That’s it! When you click the button on
+                    <code>index.html</code>, the
+                    <code>snippetHandler</code> returns a bit of HTML that gets
+                    injected into <code>#snippet-area</code>.
+                </p>
+            </section>
+
+            <!-- Testing the App -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">6. Testing the App</h2>
+                <p class="leading-relaxed">
+                    1. In your project folder, run
+                    <code class="bg-gray-800 px-1 py-0.5 rounded"
+                        >go run main.go</code
+                    >. <br />2. Open
+                    <a
+                        href="http://localhost:8080"
+                        class="underline text-teal-300 hover:text-teal-200"
+                        >http://localhost:8080</a
+                    >
+                    in your browser. <br />3. Click “Load Snippet” – you should
+                    see the green snippet inserted without a full page reload.
+                </p>
+            </section>
+
+            <!-- Conclusion -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-2">7. Conclusion</h2>
+                <p class="leading-relaxed">
+                    With just a few lines of code, you’ve added dynamic, partial
+                    page updates to a Go application using
+                    <code class="bg-gray-800 px-1 py-0.5 rounded">HTMX</code>.
+                    There’s no heavy JavaScript framework here—just simple HTML
+                    attributes. From here, you can extend the snippet approach
+                    for forms, multi-step interactions, or inline editing.
+                </p>
+            </section>
+
+            <!-- Tutorial Footer -->
+            {{ template "genericfooter" . }}
+        </div>
+    </body>
+</html>

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"os"
 	"strconv"
 )
 
@@ -131,6 +130,51 @@ func main() {
 		case 3:
 			parseThisFile = "static/novicenethttp.html"
 		case 4:
+			//parseThisFile = "static/noviceintro" TODO NEED NOVICETEMPLATEING
+		case 5:
+			parseThisFile = "static/novicetailwind.html"
+		case 6:
+			parseThisFile = "static/beginnerstartingoserver.html"
+		case 7:
+			parseThisFile = "static/beginnertempalting.html"
+		case 8:
+			parseThisFile = "static/beginnertailwindandtemplates.html"
+
+		}
+
+		t, err := template.ParseFiles(parseThisFile, "slices/genericheader.html", "slices/genericfooter.html")
+		if err != nil {
+			fmt.Printf(err.Error())
+			return
+		}
+		t.Execute(w, parseThisFile)
+
+	})
+
+	mux.HandleFunc("GET /1/{id}", func(w http.ResponseWriter, r *http.Request) {
+		tutparam := r.PathValue("id")
+		fmt.Printf("ID IS : %s", tutparam)
+		if tutparam == "" {
+			http.Redirect(w, r, "/tutorials", http.StatusMovedPermanently)
+		}
+		intparam, err := strconv.Atoi(tutparam)
+		if err != nil {
+
+			fmt.Fprintf(w, "404 error.", http.StatusGone)
+			return
+		}
+		parseThisFile := "static/tutorials.html"
+
+		switch intparam {
+		case 0:
+			parseThisFile = "static/intermediatehtmxgo.html"
+		case 1:
+			parseThisFile = "static/intermediatetemplatehtmxgo.html"
+		case 2:
+			parseThisFile = "static/intermediatebringitalltogether.html"
+		case 3:
+			parseThisFile = "static/novicenethttp.html"
+		case 4:
 			//parseThisFile = "static/novice"
 			//TODO: ADD NOVICE TEMPLATING HTML FILE
 		case 5:
@@ -146,16 +190,23 @@ func main() {
 
 	})
 
-	mux.HandleFunc("GET /tailwindminified.js", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
-		thisfile, err := os.ReadFile("/static/tailwindminified.js")
+	mux.HandleFunc("GET /snippet", func(w http.ResponseWriter, r *http.Request) {
+		// Provide data specifically for snippet.html and one of the advanced tutorials.
+		type PageData struct {
+			UserName string
+			Score    int
+		}
+		snippetData := PageData{
+			UserName: "Alice",
+			Score:    9999,
+		}
+		t, err := template.ParseFiles("slices/snippet.html")
 		if err != nil {
 			panic(err)
 		}
-		fmt.Fprintf(w, "", thisfile)
-
+		fmt.Fprint(w, (t.Execute(w, snippetData)))
 	})
 
 	fmt.Printf("localhost:8080 + \n")
-	http.ListenAndServe(":8080", mux)
+	http.ListenAndServe(":8081", mux)
 }

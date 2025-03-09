@@ -4,9 +4,6 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Beginner - Working with Templating</title>
-
-        <!-- Tailwind CSS (replace with your preferred method of including Tailwind) -->
-        <script src="tailwindminified.js"></script>
     </head>
     <body class="bg-gray-900 text-teal-100 font-sans">
         <!-- Header (same as on other pages) -->
@@ -58,10 +55,10 @@ import (
 
 func main() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        tmpl, err := template.ParseFiles("index.html") //Note how we're using the walrus operator to get the value to the parsed template, but also the error.
+        tmpl, err := template.ParseFiles("index.html")
         if err != nil {
-            log.Fatal(err) //NOTE: I use log fatal and panic(err) a lot, but there are better ways to handle errors in Go.
-            //For example, if the template doesn't parse, you could catch it and instead redirect the user to a "440: resource not found" page
+            log.Fatal(err)
+
         }
         tmpl.Execute(w, nil)
     })
@@ -70,6 +67,14 @@ func main() {
 }
 </pre>
                 <p class="mb-4 leading-relaxed">
+                    Note how we're using the walrus operator to get the value to
+                    the parsed template, but also the error.
+                    <br /><br />
+                    Note I use log fatal and panic(err) a lot, but there are
+                    better ways to handle errors in Go. For example, if the
+                    template doesn't parse, you could catch it and instead
+                    redirect the user to a "440: resource not found" page.
+                    <br /><br />
                     Whenever a user visits
                     <code class="bg-stone-700 px-1 py-0.5 rounded"
                         >http://localhost:8080</code
@@ -278,8 +283,8 @@ func main() {
 </pre>
                 <p class="mb-4 leading-relaxed">
                     In <code>home.html</code>, you can reference
-                    <code>{{.Title}}</code> and <code>{{.Message}}</code> for
-                    dynamic content:
+                    <code> something like &#123;&#123; .Title}} </code> and
+                    <code> &#123;&#123;.Message}} </code> for dynamic content:
                 </p>
                 <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
 <span class="text-gray-300">&lt;!-- home.html --&gt;</span>
@@ -287,11 +292,11 @@ func main() {
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="utf-8"&gt;
-    &lt;title&gt;{{.Title}}&lt;/title&gt;
+    &lt;title&gt;&#123;&#123;.Title}}&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;{{.Title}}&lt;/h1&gt;
-    &lt;p&gt;{{.Message}}&lt;/p&gt;
+    &lt;h1&gt;&#123;&#123;.Title}}&lt;/h1&gt;
+    &lt;p&gt;&#123;&#123;.Message}}&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>

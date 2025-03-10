@@ -3,7 +3,7 @@
         Alright, this is gonna be pretty strange, but hey - AI is a pretty big
         topic nowadays. I like to use it for the following use cases:
     </p>
-    <ol class="gap-4 list-decimal">
+    <ol class="gap-8 list-decimal">
         <li>
             Generating HTML + Tailwind boilerplate (Simple, GPT does this SUPER
             well)
@@ -33,15 +33,27 @@
             hallucinates and does more than what you want - but most of the time
             you can give it more context to solve that problem.
         </li>
-    </ol>
-    Here's what I DON'T use it for:
-    <ol class="gap-4 list-decimal">
-        <li>Generating the Go main code for me. I can do it myself</li>
         <li>
-            Generating functions. It doesn't get what I want, and sometimes it
-            implements imports I tell it not to use. Remember, a lot of Go web
-            code that chatgpt uses is based off of using frameworks and custom
-            routes.
+            Simple, isolated and easily testable functions. For example, for one
+            of my data processing projects I used it to read in files that end
+            in .txt and it returned the output with no side effects.
+        </li>
+    </ol>
+    ---------------------------------------- <br /><br />
+    Here's what I DON'T use it for: <br /><br />
+    ----------------------------------------
+    <ol class="gap-4 list-decimal">
+        <li>
+            Generating the Go main code for me. I can do it myself, and you
+            can't use AI to create Go boilerplate the same way you can use it
+            for HTML. It gets complicated.
+        </li>
+        <li>
+            Generating complex fucntions. It doesn't get what I want, and
+            sometimes it implements imports I tell it not to use. Remember, a
+            lot of Go web code that chatgpt uses is based off of using
+            frameworks and custom routes. In a more egrigious case, GPT started
+            trying to add react components to my page and wouldn't stop.
         </li>
         <li>
             Generating htmx. It doesn't work, and it really suffers to link two

@@ -3,7 +3,9 @@
     {{ template "genericheader" . }}
     <body class="bg-gray-900 text-teal-100 font-sans">
         <!-- Main Section -->
-        <main class="container mx-auto px-4 py-8">
+        <main
+            class="container mx-auto px-4 py-8 max-w-3xl mx-auto text-justify"
+        >
             <!-- Overview Section -->
             <section class="mb-8">
                 <h2 class="text-2xl font-semibold mb-2">1. Overview</h2>
@@ -103,7 +105,7 @@
             &lt;head&gt;
               &lt;meta charset=&quot;UTF-8&quot;&gt;
               &lt;title&gt;&#123;&#123;block &quot;title&quot; .}}My Go App&#123;&#123;end}}&lt;/title&gt;
-              &lt;link href=&quot;https://cdn.jsdelivr.net/npm/tailwindcss@3.3.1/dist/tailwind.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+              &lt;script href=&quot;https://unpkg.com/@tailwindcss/browser@4&quot; rel=&quot;stylesheet&quot;&gt; &lt;/script&gt;
             &lt;/head&gt;
             &lt;body class=&quot;bg-gray-900 text-gray-100 font-sans&quot;&gt;
 

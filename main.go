@@ -105,7 +105,7 @@ func main() {
 
 	mux.HandleFunc("GET /0/{id}", func(w http.ResponseWriter, r *http.Request) {
 		tutparam := r.PathValue("id")
-		fmt.Printf("ID IS : %s", tutparam)
+		//	fmt.Printf("ID IS : %s", tutparam)
 		if tutparam == "" {
 			http.Redirect(w, r, "/tutorials", http.StatusMovedPermanently)
 		}
@@ -130,7 +130,7 @@ func main() {
 		case 3:
 			parseThisFile = "static/novicenethttp.html"
 		case 4:
-			//parseThisFile = "static/noviceintro" TODO NEED NOVICETEMPLATEING
+			parseThisFile = "static/novicetemplateintro.html"
 		case 5:
 			parseThisFile = "static/novicetailwind.html"
 		case 6:
@@ -153,7 +153,7 @@ func main() {
 
 	mux.HandleFunc("GET /1/{id}", func(w http.ResponseWriter, r *http.Request) {
 		tutparam := r.PathValue("id")
-		fmt.Printf("ID IS : %s", tutparam)
+		//	fmt.Printf("ID IS : %s", tutparam)
 		if tutparam == "" {
 			http.Redirect(w, r, "/tutorials", http.StatusMovedPermanently)
 		}

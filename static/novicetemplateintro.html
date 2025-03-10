@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Novice Introduction to Templating &amp; Go html/template</title>
+        <!-- Dark/Teal Theme for consistency -->
+    </head>
+    <body class="bg-gray-900 text-teal-100 font-sans">
+        <!-- Main Container -->
+        {{ template "genericheader" .}}
+        <div class="container mx-auto px-4 py-8">
+            <!-- Tutorial Header -->
+            <header class="mb-6 text-center">
+                <h1 class="text-3xl font-bold mb-2">
+                    Novice Introduction to Templating &amp; Go’s html/template
+                </h1>
+                <p class="text-teal-300">
+                    Explore the basic ideas behind web templates and how Go’s
+                    <strong>html/template</strong> package helps you serve
+                    dynamic pages.
+                </p>
+            </header>
+
+            <!-- Constrained Content Section -->
+            <section class="max-w-3xl mx-auto text-justify">
+                <!-- What is Templating? -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold mb-2">
+                        1. What Is Templating?
+                    </h2>
+                    <p class="leading-relaxed mb-4">
+                        Templating involves separating your web page’s structure
+                        (HTML) from the data or content that fills it. Instead
+                        of coding an entire HTML file for every scenario, you
+                        create <em>placeholders</em> (or placeholders plus
+                        control statements) that will be replaced or interpreted
+                        at runtime with real values, such as user names, page
+                        titles, or lists of items.
+                    </p>
+                    <p class="leading-relaxed">
+                        This practice streamlines your workflow. It ensures
+                        consistency across pages (by reusing layouts and
+                        partials) and simplifies updates—if you change how a
+                        page looks in one place, it reflects wherever the
+                        template is used.
+                    </p>
+                </section>
+
+                <!-- Go’s html/template Package -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold mb-2">
+                        2. Go’s html/template
+                    </h2>
+                    <p class="leading-relaxed mb-4">
+                        Go offers a built-in library for templating called
+                        <strong>html/template</strong>. It’s specifically
+                        designed for generating HTML output safely, including
+                        features like <em>auto-escaping</em> by default to
+                        protect against some common security pitfalls.
+                    </p>
+                    <p class="leading-relaxed">
+                        In a typical scenario, you’ll:
+                    </p>
+                    <ul class="list-disc list-inside ml-4 mb-4">
+                        <li>
+                            Create one or more <em>.html</em> files that define
+                            your page structure, with placeholders for dynamic
+                            content.
+                        </li>
+                        <li>
+                            Use <strong>Go</strong> to <em>parse</em> these
+                            templates during your application’s startup (often
+                            with functions like
+                            <code class="bg-gray-800 px-1 py-0.5 rounded"
+                                >ParseFiles</code
+                            >
+                            or
+                            <code class="bg-gray-800 px-1 py-0.5 rounded"
+                                >ParseGlob</code
+                            >).
+                        </li>
+                        <li>
+                            When a user requests a page, you
+                            <em>execute</em> the relevant template, passing in
+                            data (e.g., a struct or map) that fills those
+                            placeholders.
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Use Cases & Benefits -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold mb-2">
+                        3. Use Cases &amp; Benefits
+                    </h2>
+                    <p class="leading-relaxed mb-4">
+                        Whether you’re building a small hobby site or a complex
+                        production application, Go’s
+                        <strong>html/template</strong> helps you:
+                    </p>
+                    <ul class="list-disc list-inside ml-4 mb-4">
+                        <li>
+                            <strong>Maintain a consistent look</strong>: You can
+                            define a base layout (header, footer, styles) and
+                            reuse it across multiple pages.
+                        </li>
+                        <li>
+                            <strong>Inject dynamic data</strong>: Display user
+                            information, database results, or session details
+                            without manually constructing HTML strings.
+                        </li>
+                        <li>
+                            <strong>Keep logic minimal in templates</strong>:
+                            The <em>html/template</em> syntax encourages a clear
+                            separation of concerns—most business logic remains
+                            in Go code, while the template only handles
+                            presentation.
+                        </li>
+                        <li>
+                            <strong>Protect against vulnerabilities</strong>:
+                            Automatic escaping reduces the risk of cross-site
+                            scripting (XSS).
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- How to Learn More -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold mb-2">
+                        4. How to Learn More
+                    </h2>
+                    <p class="leading-relaxed mb-4">
+                        To deepen your understanding of Go templates, check out:
+                    </p>
+                    <ul class="list-disc list-inside ml-4">
+                        <li>
+                            <a
+                                href="https://pkg.go.dev/html/template"
+                                class="underline text-teal-300 hover:text-teal-200"
+                            >
+                                The Official html/template Documentation
+                            </a>
+                            (pkg.go.dev)
+                        </li>
+                        <li>
+                            <a
+                                href="https://gobyexample.com/text-templates"
+                                class="underline text-teal-300 hover:text-teal-200"
+                            >
+                                Go by Example: Text Templates
+                            </a>
+                            – for a quick, interactive look at template basics.
+                            Note: It focuses more on text rather than html - but
+                            the overall logic is the same.
+                        </li>
+                        <li>
+                            <a
+                                href="https://go.dev/doc/articles/wiki/"
+                                class="underline text-teal-300 hover:text-teal-200"
+                            >
+                                Go’s Wiki Tutorial
+                            </a>
+                            – a step-by-step tutorial that uses html/template to
+                            build a tiny wiki engine.
+                        </li>
+                    </ul>
+                    <p class="leading-relaxed mt-4">
+                        Through these resources, you’ll discover template
+                        <em>actions</em> like <code>"&#x7B;&#x7B;.}}"</code>,
+                        control statements like
+                        <code>"&#x7B;&#x7B;if .}}"</code> or
+                        <code>"&#x7B;&#x7B;range .}}"</code>, and best practices
+                        for organizing your templates in more complex projects
+                        (e.g., partials, block layouts, multiple parse calls).
+                    </p>
+                </section>
+
+                <!-- Conclusion -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold mb-2">5. Conclusion</h2>
+                    <p class="leading-relaxed">
+                        Templating is at the heart of many modern web
+                        frameworks—and in Go,
+                        <strong>html/template</strong> provides a powerful yet
+                        straightforward solution. By learning how to parse,
+                        execute, and manage template files, you’ll be able to
+                        generate dynamic HTML in a clear, maintainable way.
+                        Whether you’re building a personal site or a larger web
+                        app, mastering Go’s native templating system is a
+                        significant step toward clean, robust server-side
+                        rendering.
+                    </p>
+                </section>
+            </section>
+        </div>
+        {{ template "genericfooter" . }}
+    </body>
+</html>

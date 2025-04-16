@@ -142,7 +142,7 @@ func main() {
 
 		}
 
-		t, err := template.ParseFiles(parseThisFile, "slices/genericheader.html", "slices/genericfooter.html")
+		t, err := template.ParseFiles(parseThisFile, "slices/genericheader.html", "slices/genericfooter.html", "slices/asidetemplate.html")
 		if err != nil {
 			fmt.Printf(err.Error())
 			return

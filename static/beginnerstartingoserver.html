@@ -9,8 +9,8 @@
         {{ template "genericheader" . }}
 
         <!-- Main Content -->
-        <main class="container mx-auto px-4 py-8">
-            <section class="max-w-3xl mx-auto text-justify">
+        <main class="container mx-auto px-4 py-8 justify-center gap-8">
+            <section class="max-w-3xl mx-auto text-justify shrink">
                 <h2 class="text-3xl font-semibold mb-4">
                     Beginner: Starting a Go server
                 </h2>
@@ -34,6 +34,7 @@
                     Here’s the simplest way to serve a single “Hello, world!”
                     response on port 8080:
                 </p>
+
                 <pre class="bg-stone-800 text-teal-100 p-4 rounded mb-4">
 <span class="text-gray-300">// minimal.go</span>
 package main
@@ -183,11 +184,12 @@ func main() {
                 </p>
 
                 <p class="mb-4 leading-relaxed">
-                    <button
+                    <a
+                        href="/0/7"
                         class="bg-stone-700 text-teal-300 px-3 py-2 rounded transition-colors hover:bg-stone-600"
                     >
                         Next stop: Using Templates to serve pages
-                    </button>
+                    </a>
                 </p>
             </section>
         </main>

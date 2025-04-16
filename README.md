@@ -1,3 +1,13 @@
+Changelog:
+<details>
+    <summary> Changelog 4/15/2025:
+        -Tried adding sidebar (still bugged)
+        -Tried to add favicon (failed)
+        -Added working buttons so you can go between pages (!!!!)
+        -Formatting improvments (proofreading, spellchecking etc. etc.)
+        -Find anything that sucks? TELL ME.
+    </summary>
+</details>
 # GOTTHStackTutorial
 Hello! Welcome to my GOTTH stack tutorial. I made this as a central repo for GOTTH stack work, and for everything that's relevant.
 
